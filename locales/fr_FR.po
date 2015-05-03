@@ -1,0 +1,122 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Ticket transfer\n"
+"POT-Creation-Date: 2015-05-03 16:58+0100\n"
+"PO-Revision-Date: 2015-05-03 16:58+0100\n"
+"Last-Translator: Etienne <etienne-github@outlook.fr>\n"
+"Language-Team: Etienne <Etienne-github@outlook.fr>\n"
+"Language: fr_FR\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.7.6\n"
+"X-Poedit-Basepath: ../.\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-KeywordsList: __:1,2t\n"
+"X-Poedit-SearchPath-0: .\n"
+
+#: front/tickettab.form.php:57
+msgid ""
+"You must change the ticket location to do a transfer (at least one in "
+"entity, type or category)"
+msgstr ""
+"Vous devez changer la localisation du ticket pour faire un transfert (au "
+"moins paramêtre parmis entité, type ou catégorie)"
+
+#: front/tickettab.form.php:120 inc/tickettab.class.php:143
+msgid "Transfer explanation / justification"
+msgstr "Explication / justification du transfert"
+
+#: front/tickettab.form.php:150
+msgid "Successful transfer"
+msgstr "Transfert réussi"
+
+#: inc/profileconfig.class.php:13 inc/tickettab.class.php:12
+msgid "Ticket transfer"
+msgstr "Ticket transfer"
+
+#: inc/profileconfig.class.php:58
+msgid "Ticket transfer plugin settings"
+msgstr "Paramétrage du plugin Ticket transfer"
+
+#: inc/profileconfig.class.php:61
+msgid "Allow ticket transfer to entity"
+msgstr "Autoriser le transfert vers une autre entité"
+
+#: inc/tickettab.class.php:71
+msgid "Transfer to an other entity"
+msgstr "Tranférer vers une autre entité"
+
+#: inc/tickettab.class.php:96
+msgid "Change my role"
+msgstr "Changer mon rôle"
+
+#: inc/tickettab.class.php:104
+msgid ""
+"This option allows you to change your role on the ticket after the transfer"
+msgstr ""
+"Cette option vous permet de changer votre rôle vis-à-vis de ce ticket en "
+"même temps que vous le transférez"
+
+#: inc/tickettab.class.php:106
+msgid ""
+"Because your belong to one of the observer groups, you cannot stop being an "
+"observer"
+msgstr ""
+"Vous ne pouvez pas cesser d'être observeteur car vous faites partie d'un "
+"groupe d'observateurs"
+
+#: inc/tickettab.class.php:108 inc/tickettab.class.php:114
+msgid "Observer only"
+msgstr "Observateur seulement"
+
+#: inc/tickettab.class.php:109 inc/tickettab.class.php:115
+msgid "Assigned and observer"
+msgstr "Observateur et assigné à"
+
+#: inc/tickettab.class.php:113
+msgid "Assigned only"
+msgstr "Assigné à seulement"
+
+#: inc/tickettab.class.php:116
+msgid "No role anymore"
+msgstr "Plus aucun rôle"
+
+#: inc/tickettab.class.php:129
+msgid "current role"
+msgstr "situation actuelle"
+
+#: setup.php:24
+msgid "Plugin has been tested only for GLPI 0.84.8"
+msgstr "Ce plugin n'a été testé que pour GLPI 0.84.8"
+
+#~ msgid "Transfer explanation : \\n"
+#~ msgstr "Explication/justification du transfert : \\n"
+
+#~ msgid "No transfer : category not defined"
+#~ msgstr ""
+#~ "Vous devez impérativement sélectionner une catégorie. Transfert annulé"
+
+#~ msgid " It's not a transfer if you don't change the ticket location !"
+#~ msgstr ""
+#~ "Vous devez changer l'emplacement du ticket pour faire un transfert (au "
+#~ "moins un des trois parmis entité, type et catégorie)"
+
+#~ msgid "Transfer explaination"
+#~ msgstr "Explication du transfert : "
+
+#~ msgid "Profile tab name"
+#~ msgstr "Ticket transfer"
+
+#~ msgid "transfer_justification"
+#~ msgstr "Explication / justification du transfert"
+
+#~ msgid "transfer_justification_prefix"
+#~ msgstr "Explication du transfer"
+
+#~ msgid "Allow ticket transfer"
+#~ msgstr "Autoriser à transférer les tickets"
+
+#~ msgid "Ticket tab name"
+#~ msgstr "Ticket Transfer"
