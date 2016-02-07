@@ -8,9 +8,9 @@ function plugin_version_tickettransfer()
 {
 	return array('name'           => "Ticket transfer",
 			'version'        => '0.0.1',
-			'author'         => 'Etienne',
+			'author'         => 'Etiennef',
 			'license'        => 'GPLv2+',
-			'homepage'       => 'http://lmgtfy.com/?q=Etienne',
+			'homepage'       => 'https://github.com/Etiennef/tickettransfer',
 			'minGlpiVersion' => '0.84');
 }
 
@@ -57,23 +57,21 @@ function plugin_init_tickettransfer()
 
 	$PLUGIN_HOOKS['csrf_compliant']['tickettransfer'] = true;
 	
-	//$PLUGIN_HOOKS['config_page']['tickettransfer'] = 'front/config.form.php';
-	//Plugin::registerClass('PluginTickettransferConfig');
+	Plugin::registerClass('PluginTickettransferConfig', array(
+		'addtabon' => array('User', 'Preference','Config', 'Entity', 'Profile')));
+	$PLUGIN_HOOKS['config_page']['tickettransfer'] = 'front/config.form.php';
 	
+	// Onglet transfert pour les tickets
 	Plugin::registerClass('PluginTickettransferTickettab', array('addtabon' => array('Ticket')));
 	
-	Plugin::registerClass('PluginTickettransferProfileconfig', array('addtabon' => array('Profile')));
-	$PLUGIN_HOOKS['change_profile']['tickettransfer'] = array('PluginTickettransferProfileconfig','onProfileChange');
+	// Notifications
+	$PLUGIN_HOOKS['item_get_events']['tickettransfer'] = 
+			array('NotificationTargetTicket' => array('PluginTickettransferNotification', 'addEvents'));
+	$PLUGIN_HOOKS['item_get_datas']['tickettransfer'] = 
+			array('NotificationTargetTicket' => array('PluginTickettransferNotification', 'getDatas'));
+	
 }
 
-
-
-
-//TODO copier escalade pour gérer la réattribution du groupe technique (de fcatte façon, on aurait un mode de transfert avec groupe, l'autre sans)
-//TODO voir si on peut personnliser le comportement par défaut au niveau du rôle
-
-//TODO permettre de forcer à mettre un commentaire
-//TODO rendre le préfixe du commentaire réglable
 
 
 
