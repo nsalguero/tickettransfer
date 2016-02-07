@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2015-05-03 16:57+0100\n"
-"PO-Revision-Date: 2015-05-03 16:57+0100\n"
+"POT-Creation-Date: 2016-02-07 20:04+0100\n"
+"PO-Revision-Date: 2016-02-07 20:04+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <etienne-github@outlook.fr>\n"
 "Language: en_GB\n"
@@ -16,7 +16,11 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: .\n"
 
-#: front/tickettab.form.php:57
+#: front/tickettab.form.php:14
+msgid "Invalid input : "
+msgstr ""
+
+#: front/tickettab.form.php:116
 msgid ""
 "You must change the ticket location to do a transfer (at least one in "
 "entity, type or category)"
@@ -24,71 +28,191 @@ msgstr ""
 "You must change the ticket location to do a transfer (at least one in "
 "entity, type or category)"
 
-#: front/tickettab.form.php:120 inc/tickettab.class.php:143
+#: front/tickettab.form.php:123
+msgid "You must chose a new group to do a transfer"
+msgstr "You must chose a new group to do a transfer"
+
+#: front/tickettab.form.php:243 inc/tickettab.class.php:183
 msgid "Transfer explanation / justification"
 msgstr "Transfer explanation / justification"
 
-#: front/tickettab.form.php:150
+#: front/tickettab.form.php:250
+msgid "You must give a transfer justification"
+msgstr "You must give a transfer justification"
+
+#: front/tickettab.form.php:282
+#, php-format
+msgid "%s transfers a ticket"
+msgstr "%s transfers a ticket"
+
+#: front/tickettab.form.php:284
 msgid "Successful transfer"
 msgstr "Successful transfer"
 
-#: inc/profileconfig.class.php:13 inc/tickettab.class.php:12
+#: inc/config.class.php:36
+msgid "Allow requalification"
+msgstr "Allow requalification"
+
+#: inc/config.class.php:46
+msgid "Allow escalation"
+msgstr "Allow escalation"
+
+#: inc/config.class.php:56 inc/config.class.php:67
+msgid "Notification on requalification"
+msgstr "Notification on requalification"
+
+#: inc/config.class.php:58 inc/config.class.php:69
+msgid "Always"
+msgstr "Always"
+
+#: inc/config.class.php:59
+msgid "Only when assign group changes"
+msgstr "Only when assign group changes"
+
+#: inc/config.class.php:60 inc/config.class.php:71
+msgid "Never"
+msgstr "Never"
+
+#: inc/config.class.php:70
+msgid "Only when the user doing the transfer is not in destination group"
+msgstr "Only when the user doing the transfer is not in destination group"
+
+#: inc/config.class.php:78
+msgid "Allowed entities"
+msgstr "Allowed entities"
+
+#: inc/config.class.php:90
+msgid "Force transfer justification"
+msgstr "Force transfer justification"
+
+#: inc/config.class.php:104
+msgid "Keep current status"
+msgstr "Keep current status"
+
+#: inc/config.class.php:113
+msgid "Keep current group"
+msgstr "Keep current group"
+
+#: inc/config.class.php:114 inc/tickettab.class.php:267
+msgid "Automatic transfer"
+msgstr "Automatic transfer"
+
+#: inc/config.class.php:265
+msgid ""
+"Warning, you defined the inherit option together with other option. Only "
+"inherit will but taken into account"
+msgstr ""
+"Warning, you defined the inherit option together with other option. Only "
+"inherit will but taken into account"
+
+#: inc/config.class.php:333 inc/tickettab.class.php:32
 msgid "Ticket transfer"
 msgstr "Ticket transfer"
 
-#: inc/profileconfig.class.php:58
+#: inc/config.class.php:391
 msgid "Ticket transfer plugin settings"
 msgstr "Ticket transfer plugin settings"
 
-#: inc/profileconfig.class.php:61
-msgid "Allow ticket transfer to entity"
-msgstr "Allow ticket transfer to entity"
+#: inc/config.class.php:403
+msgid "Inherit from global config"
+msgstr "Inherit from global config"
 
-#: inc/tickettab.class.php:71
-msgid "Transfer to an other entity"
-msgstr "Transfer to an other entity"
+#: inc/notification.class.php:26
+msgid "Ticket requalification"
+msgstr "Ticket requalification"
 
-#: inc/tickettab.class.php:96
-msgid "Change my role"
-msgstr "Change my role"
+#: inc/notification.class.php:27
+msgid "Ticket escalation"
+msgstr "Ticket escalation"
 
-#: inc/tickettab.class.php:104
-msgid ""
-"This option allows you to change your role on the ticket after the transfer"
-msgstr ""
-"This option allows you to change your role on the ticket after the transfer"
+#: inc/tickettab.class.php:149
+msgid "Transfer mode"
+msgstr "Transfer mode"
 
-#: inc/tickettab.class.php:106
-msgid ""
-"Because your belong to one of the observer groups, you cannot stop being an "
-"observer"
-msgstr ""
-"Because your belong to one of the observer groups, you cannot stop being an "
-"observer"
+#: inc/tickettab.class.php:173
+msgid "Keep me observer"
+msgstr "Keep me observer"
 
-#: inc/tickettab.class.php:108 inc/tickettab.class.php:114
-msgid "Observer only"
-msgstr "Observer only"
+#: inc/tickettab.class.php:173
+msgid "Add me as observer"
+msgstr "Add me as observer"
 
-#: inc/tickettab.class.php:109 inc/tickettab.class.php:115
-msgid "Assigned and observer"
-msgstr "Assigned and observer"
+#: inc/tickettab.class.php:210
+msgid "Transfer somewhere else"
+msgstr "Transfer somewhere else"
 
-#: inc/tickettab.class.php:113
-msgid "Assigned only"
-msgstr "Assigned only"
+#: inc/tickettab.class.php:211
+msgid "Transfer to an other group"
+msgstr "Transfer to an other group"
 
-#: inc/tickettab.class.php:116
-msgid "No role anymore"
-msgstr "No role anymore"
+#: inc/tickettab.class.php:266
+msgid "Keep attribution"
+msgstr "Keep attribution"
 
-#: inc/tickettab.class.php:129
-msgid "current role"
-msgstr "current role"
+#: inc/tickettab.class.php:271
+msgid "This category does not allow automatic transfer"
+msgstr "This category does not allow automatic transfer"
 
 #: setup.php:24
 msgid "Plugin has been tested only for GLPI 0.84.8"
 msgstr "Plugin has been tested only for GLPI 0.84.8"
+
+#~ msgid "Notification on escalation"
+#~ msgstr "Notification on escalation"
+
+#~ msgid "Default 'stay observer' value"
+#~ msgstr "Default 'stay observer' value"
+
+#~ msgid "Default 'transfer mode' for group on requalification"
+#~ msgstr "Default 'transfer mode' for group on requalification"
+
+#~ msgid ""
+#~ "Warning, you defined the inherit option together with other option for "
+#~ "allowed entities. Only inherit will but taken into account"
+#~ msgstr ""
+#~ "Warning, you defined the inherit option together with other option for "
+#~ "allowed entities. Only inherit will but taken into account"
+
+#~ msgid "Inherit from global config :"
+#~ msgstr "Inherit from global config :"
+
+#~ msgid "Allow ticket transfer to entity"
+#~ msgstr "Allow ticket transfer to entity"
+
+#~ msgid "Transfer to an other entity"
+#~ msgstr "Transfer to an other entity"
+
+#~ msgid "Change my role"
+#~ msgstr "Change my role"
+
+#~ msgid ""
+#~ "This option allows you to change your role on the ticket after the "
+#~ "transfer"
+#~ msgstr ""
+#~ "This option allows you to change your role on the ticket after the "
+#~ "transfer"
+
+#~ msgid ""
+#~ "Because your belong to one of the observer groups, you cannot stop being "
+#~ "an observer"
+#~ msgstr ""
+#~ "Because your belong to one of the observer groups, you cannot stop being "
+#~ "an observer"
+
+#~ msgid "Observer only"
+#~ msgstr "Observer only"
+
+#~ msgid "Assigned and observer"
+#~ msgstr "Assigned and observer"
+
+#~ msgid "Assigned only"
+#~ msgstr "Assigned only"
+
+#~ msgid "No role anymore"
+#~ msgstr "No role anymore"
+
+#~ msgid "current role"
+#~ msgstr "current role"
 
 #~ msgid "Transfer explanation : \\n"
 #~ msgstr "Transfer explanation : \\n"

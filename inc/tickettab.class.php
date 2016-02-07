@@ -1,221 +1,287 @@
 <?php
 class PluginTickettransferTickettab extends CommonDBTM {
-	static function isTabVisible() {
-		return isset ( $_SESSION['plugin']['tickettransfer']['profileconfig']['transfer_toentity']) and 
-			$_SESSION['plugin']['tickettransfer']['profileconfig']['transfer_toentity'] == '1' and
-			Session::haveRight ( "update_ticket", "1" );
+	const TRANSFER_TYPE_ENTITY = 'entity';
+	const TRANSFER_TYPE_GROUP = 'group';
+	const TRANSFER_MODE_KEEP = 'keep';
+	const TRANSFER_MODE_AUTO = 'auto';
+
+	/**
+	 * Détermine si le ticket peut être transféré par cet utilisateur. Cela nécessite les droits pour : - modifier le
+	 * ticket - créer un suivi - la config autorise le transfert
+	 *
+	 * @param Ticket $ticket
+	 *        	le ticket à tester
+	 */
+	static function canTansfer(Ticket $ticket) {
+		$config = PluginTickettransferConfig::getConfigValues();
+		
+		$fup = new TicketFollowup();
+		$fuptestinput = array(
+			'content' => 'test',
+			'tickets_id' => $ticket->getID(),
+			'requesttypes_id' => '1',
+			'is_private' => '0' 
+		);
+		
+		return $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) && (
+				 ($config['allow_transfer'] || $config['allow_group'])) ;
 	}
-	
-	
+
 	function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
-		if ($item->getType () == 'Ticket' and self::isTabVisible ()) {
-			return __ ( "Ticket transfer", 'tickettransfer' );
+		if($item->getType() == 'Ticket' && self::canTansfer($item)) {
+			return __("Ticket transfer", 'tickettransfer');
 		}
 		return '';
 	}
-	
-	
+
 	static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-		if ($item->getType () == 'Ticket' and self::isTabVisible ()) {
-			// on affiche le formulaire pour le ticket sélectionné
-			(new self ())->showForm ( $item->getField ( 'id' ) );
+		if($item->getType() == 'Ticket' && self::canTansfer($item)) {
+			self::showForm($item);
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Fonction qui affiche le formulaire du plugin
-	 * 
-	 * @param type $id
-	 *        	id du profil pour lequel on affiche les droits
-	 * @param type $options        	
-	 * @return boolean
+	 * Calcule les valeurs à afficher par défaut dans l'onglet de transfert
+	 *
+	 * @param Ticket $ticket        	
+	 * @return array tableau de valeurs par défaut
 	 */
-	function showForm($id, $options = array()) {
-		global $DB;
-		global $CFG_GLPI;
+	static function getFormValues($ticket) {
+		$config = PluginTickettransferConfig::getConfigValues();
 		
-		$rand = mt_rand ();
+		// Calcul des valeurs par défaut
+		$form_values = array(
+			'transfer_type' => $config['allow_transfer'] ? self::TRANSFER_TYPE_ENTITY : self::TRANSFER_TYPE_GROUP,
+			'entities_id' => $ticket->fields['entities_id'],
+			'current_entities_id' => $ticket->fields['entities_id'],
+			'type' => $ticket->fields['type'],
+			'itilcategories_id' => $ticket->fields['itilcategories_id'],
+			// TODO cas où on est obserateur en tant que groupe à traiter
+			'is_observer' => $ticket->isUser(CommonITILActor::OBSERVER, Session::getLoginUserID()) ||
+					 $ticket->haveAGroup(CommonITILActor::OBSERVER, $_SESSION["glpigroups"]),
+					'transfer_justification' => '',
+			'allowed_entities' => $config['allowed_entities']
+		);
 		
-		$target = $this->getFormURL ();
-		if (isset ( $options ['target'] )) {
-			$target = $options ['target'];
+		// défini un groupe au hasard parmis ceux auxquels le ticket est affecté
+		$groups = $ticket->getGroups(CommonITILActor::ASSIGN);
+		if(count($groups) >= 1) {
+			reset($groups);
+			$form_values['_groups_id_assign'] = current($groups)['groups_id'];
 		}
 		
-		$ticket = new Ticket ();
-		$ticket->getFromDB ( $id );
+		switch($config['default_observer_option']) {
+			case 'nochange' :
+				$form_values['observer_option'] = $form_values['is_observer'];
+				break;
+			case 'yes' :
+				$form_values['observer_option'] = true;
+				break;
+			case 'no' :
+				$form_values['observer_option'] = false;
+				break;
+		}
 		
-		$tt = $ticket->getTicketTemplateToUse(0, $ticket->fields['type'], $ticket->fields['itilcategories_id'], $ticket->fields['entities_id']);
-		$allow_empty_category = !$tt->isMandatoryField('itilcategories_id');
-		
+		// Ecrase les valeurs par défaut là où on a une valeur sauvegardée
 		if(isset($_SESSION['plugin']['tickettransfer']['savedPOST'])) {
-			$default_values = $_SESSION['plugin']['tickettransfer']['savedPOST'];
+			foreach($_SESSION['plugin']['tickettransfer']['savedPOST'] as $key => $val) {
+				$form_values[$key] = $val;
+			}
 			unset($_SESSION['plugin']['tickettransfer']['savedPOST']);
-		} else {
-			$default_values = array (
-					'id' => $id,
-					'entities_id' => $ticket->fields ['entities_id'],
-					'type' => $ticket->fields ['type'],
-					'itilcategories_id' => $ticket->fields ['itilcategories_id'],
-					'transfer_justification' => ''
-			);
 		}
 		
-		
-		echo "<form action='" . $target . "' method='post'>";
-		
-		
-		echo "<table class='tab_cadre_fixe'>";
-		
-		// titre contenant le choix entité / groupe
-		echo "<tr class='headerRow'><th colspan='2'>" . __ ( "Transfer to an other entity", 'tickettransfer' ) . "</th></tr>";
-		
-		echo "<tr class='tab_bg_2'>";
-		
-		//Choix de la destination
-		echo"<td><table width='100%'>";
-			// Dropdown entités
-			echo "<tr><td width='30%'>" . __ ( 'Destination entity' ) . "</td>";
-			echo "<td width='70%'>";
-			self::entitiesDropdown($default_values['entities_id'], $default_values['type'], $default_values['itilcategories_id'], $allow_empty_category);
-			echo "</td><td colspan='2'></td></tr>";
-			
-			// Dropdown type
-			echo "<tr class='tab_bg_2'><td width='30%'>" . __ ( 'Type' ) . "</td>";
-			echo "<td width='70%'><span id='type_select_area'>";
-			self::typesDropdown($default_values['entities_id'], $default_values['type'], $default_values['itilcategories_id'], $allow_empty_category);
-			echo "</span></td><td colspan='2'></td></tr>";
-			
-			// Dropdown catégories
-			echo "<tr class='tab_bg_2'><td width='30%'>" . __ ( 'Category' ) . "</td>";
-			echo "<td width='70%'><span id='category_select_area'>";
-			self::categoriesDropdown($default_values['entities_id'], $default_values['type'], $default_values['itilcategories_id'], $allow_empty_category);
-			echo "</span></td><td colspan='2'></td></tr>";
-			
-			// Dropdown désattribution
-			echo "<tr class='tab_bg_2'><td width='30%'>" . __ ( 'Change my role', 'tickettransfer') . "</td>";
-			echo "<td width='70%'><span id='category_select_area'>";
-			
-			$attribution_options = array();
-			$is_assigned = $ticket->isUser(CommonITILActor::ASSIGN, Session::getLoginUserID());
-			$is_observer = $ticket->isUser(CommonITILActor::OBSERVER, Session::getLoginUserID());
-			$is_group_observer = $ticket->haveAGroup(CommonITILActor::OBSERVER, $_SESSION["glpigroups"]);
-			
-			$tooltip = __('This option allows you to change your role on the ticket after the transfer', 'tickettransfer');
-			if($is_group_observer) {
-				$tooltip .= "\n".__('Because your belong to one of the observer groups, you cannot stop being an observer', 'tickettransfer');
-				$attribution_options = array(
-						'observer_only' => __('Observer only', 'tickettransfer'),
-						'assign_and_observer' => __('Assigned and observer', 'tickettransfer')
-				);
-			} else {
-				$attribution_options = array(
-						'assign_only' => __('Assigned only', 'tickettransfer'),
-						'observer_only' => __('Observer only', 'tickettransfer'),
-						'assign_and_observer' => __('Assigned and observer', 'tickettransfer'),
-						'none' => __('No role anymore', 'tickettransfer')
-				);
-			}
-			
-			if($is_assigned && ($is_observer || $is_group_observer)) {
-				$currentrole = 'assign_and_observer';
-			} else if($is_assigned) {
-				$currentrole = 'assign_only';
-			} else if($is_observer || $is_group_observer) {
-				$currentrole = 'observer_only';
-			} else {
-				$currentrole = 'none';
-			}
-			$attribution_options[$currentrole] .= " (".__('current role', 'tickettransfer').")";
-			if(!isset($default_values['attribution_options'])) {
-				$default_values['attribution_options'] = $currentrole;
-			}
-			
-			echo "<span class='info' title='$tooltip'>";
-			Dropdown::showFromArray("attribution_options", $attribution_options, array('value'=>$default_values['attribution_options']));
-			echo "</span>";
-			echo "</span></td><td colspan='2'></td></tr>";
-			
-		echo "</td></tr></table></td>";
-		
-		// Commentaire
-		echo "<td colspan='1'>";
-			echo __('Transfer explanation / justification', 'tickettransfer')." :</br>";
-			echo "<textarea name='transfer_justification' cols='60' rows='6'>".$default_values['transfer_justification']."</textarea>";
-		echo "</td>";
-		
-		echo "</tr>";
-		
-		
-		echo "<tr class='tab_bg_1'>";
-		echo "<td class='center' colspan='2'>";
-		echo "<input type='hidden' name='id' value=$id>";
-		echo "<input type='submit' name='transfer_ticket' value='" . __ ( 'Transfer' ) . "' class='submit'>";
-		echo "</td></tr>";
-		echo "</table>";
-		Html::closeForm ();
+		return $form_values;
 	}
-	
-	static function entitiesDropdown($currententity, $currenttype, $currentcategory, $allow_empty_category) {
-		global $CFG_GLPI;
-	
-		$rand = Entity::dropdown ( array (
-				'value' => $currententity
-		) );
-		Ajax::updateItemOnSelectEvent ( "dropdown_entities_id$rand", "type_select_area",
-				$CFG_GLPI ["root_doc"] . "/plugins/tickettransfer/ajax/dropdownTypes.php",
-				array (
-						'entity' => '__VALUE__',
-						'type' => $currenttype,
-						'category' => $currentcategory,
-						'allow_empty_category' => $allow_empty_category
-				) );
-		Ajax::updateItemOnSelectEvent ( "dropdown_entities_id$rand", "category_select_area",
-				$CFG_GLPI ["root_doc"] . "/plugins/tickettransfer/ajax/dropdownCategories.php",
-				array (
-						'entity' => '__VALUE__',
-						'type' => $currenttype,
-						'category' => $currentcategory,
-						'allow_empty_category' => $allow_empty_category
-				) );
-	}
-	
-	static function typesDropdown($currententity, $currenttype, $currentcategory, $allow_empty_category) {
-		global $CFG_GLPI;
+
+	/**
+	 * Affiche l'onglet de transfert du plugin
+	 *
+	 * @param Ticket $ticket
+	 *        	ticket pour lequel on affiche l'onglet
+	 */
+	static function showForm(Ticket $ticket) {
+		$form_values = self::getFormValues($ticket);
 		
-		$rand = Ticket::dropdownType('type', array (
-				'value' => $currenttype
-		) );
-		Ajax::updateItemOnSelectEvent ( "dropdown_type$rand", "category_select_area",
-				$CFG_GLPI ["root_doc"] . "/plugins/tickettransfer/ajax/dropdownCategories.php",
-				array (
-						'entity' => $currententity,
-						'type' => '__VALUE__',
-						'category' => $currentcategory, 
-						'allow_empty_category' => $allow_empty_category
-				) );
+		?>
+
+<form action="<?php echo self::getFormURL();?>" method="post">
+	<table class="tab_cadre_fixe">
+		<tr class="headerRow">
+			<th colspan="2"><?php self::tranfertypeDropdown($form_values);?></th>
+		</tr>
+
+		<tr class="tab_bg_2">
+			<td id="zone_transfer_type_tickettransfer">
+				<table width="100%">
+					<tr class="tab_bg_1 tickettransferentity">
+						<td width="30%"><?php echo __('Destination entity'); ?></td>
+						<td width="70%"><?php
+		PluginTickettransferEntitiesdropdown::entitiesDropdown(implode(',', $form_values['allowed_entities']), 
+				array(
+					'value' => $form_values['entities_id'],
+					'name' => 'entities_id',
+					'rand' => '_tickettransfer'
+				));
+		?></td>
+					</tr>
+
+					<tr class="tab_bg_2 tickettransferentity">
+						<td width="30%"><?php echo __('Type'); ?></td>
+						<td width="70%"><?php
+		Ticket::dropdownType('type', 
+				array(
+					'rand' => '_tickettransfer',
+					'value' => $form_values['type'] 
+				));
+		?></td>
+					</tr>
+
+					<tr class="tab_bg_1 tickettransferentity">
+						<td width="30%"><?php echo __('Category'); ?></td>
+						<td width="70%"><span
+							id='selectZone_itilcategories_id_tickettransfer'>
+									<?php self::categoriesDropdown($form_values); ?>
+								</span></td>
+					</tr>
+
+					<tr class="tab_bg_2 tickettransferentity">
+						<td width="30%"><?php echo __('Transfer mode', 'tickettransfer'); ?></td>
+						<td width="70%"><span
+							id="selectZone_transfer_options_tickettransfer">
+									<?php self::showTransferOptions($form_values); ?>
+								</span></td>
+					</tr>
+
+					<tr class="tab_bg_2 tickettransfergroup">
+						<td width="30%"><?php echo __('Destination group'); ?></td>
+						<td width="70%"><?php
+		Group::dropdown(
+				array(
+					'name' => 'groups_id_assign',
+					'rand' => '_tickettransfer',
+					'entity' => $form_values['current_entities_id'],
+					'display_emptychoice' => false,
+					'value' => $form_values['_groups_id_assign'],
+					'condition' => '`is_assign`' 
+				));
+		?></td>
+					</tr>
+
+					<tr class="tab_bg_1">
+						<td width="30%">
+									<?php echo $form_values['is_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
+								</td>
+						<td width="70%"><input type="checkbox" name="observer_option"
+							<?php echo $form_values['observer_option'] ? ' checked' : '' ?>>
+						</td>
+					</tr>
+				</table>
+			</td>
+
+			<td>
+						<?php echo __('Transfer explanation / justification', 'tickettransfer'); ?> :</br>
+				<textarea name="transfer_justification" cols="60" rows="6"><?php echo $form_values['transfer_justification']; ?></textarea>
+			</td>
+		</tr>
+
+		<tr class="tab_bg_1">
+			<td class="center" colspan="2"><input type="hidden" name="id"
+				value=<?php echo $ticket->getID(); ?>> <input type="submit"
+				name="transfer_ticket" value="<?php echo __('Transfer'); ?>"
+				class="submit"></td>
+		</tr>
+	</table>
+		<?php
+		Html::closeForm();
+		include GLPI_ROOT . "/plugins/tickettransfer/scripts/tickettab.js.php";
 	}
-	
-	
-	static function categoriesDropdown($currententity, $currenttype, $currentcategory, $allow_empty_category) {
-		global $CFG_GLPI;
+
+	/**
+	 * Affiche le dropdown de sélection du type de transfert
+	 */
+	static function tranfertypeDropdown($form_values) {
+		$config = PluginTickettransferConfig::getConfigValues();
+		$value = $form_values['transfer_type'];
 		
-		$condition = "`" . ($currenttype == Ticket::INCIDENT_TYPE ? 'is_incident' : 'is_request') . "`='1'";
-		if ($_SESSION ["glpiactiveprofile"] ["interface"] == "helpdesk") {
+		$has2options = $config['allow_transfer'] && $config['allow_group'];
+		
+		$transfer_type_options = array(
+			self::TRANSFER_TYPE_ENTITY => __('Transfer somewhere else', 'tickettransfer'),
+			self::TRANSFER_TYPE_GROUP => __('Transfer to an other group', 'tickettransfer') 
+		);
+		
+		if(! $has2options) {
+			echo $transfer_type_options[$value];
+			echo '<input id="dropdown_transfer_type_tickettransfer" name="transfer_type" type="hidden" value="' . $value .
+					 '">';
+		} else {
+			Dropdown::showFromArray("transfer_type", $transfer_type_options, 
+					array(
+						'rand' => '_tickettransfer',
+						'value' => $value 
+					));
+		}
+	}
+
+	/**
+	 * Affiche le dropdown de sélection des catégories
+	 *
+	 * @param array $input
+	 *        	tableau des valeurs à choisir par défaut - entities_id entité sélectionnée - type type de catégorie
+	 *        	sélectionné - itilcategories_id id de la catégorie à sélectionner par défaut, ou ''
+	 */
+	static function categoriesDropdown($input) {
+		$condition = "`" . ($input['type'] == Ticket::INCIDENT_TYPE ? 'is_incident' : 'is_request') . "`='1'";
+		if($_SESSION["glpiactiveprofile"]["interface"] == "helpdesk") {
 			$condition .= " AND `is_helpdeskvisible`='1'";
 		}
 		
-		ITILCategory::dropdown ( array (
-				'entity' => $currententity,
-				'display_emptychoice' => $allow_empty_category,
-				'value' => $currentcategory,
-				'condition' => $condition,
-				'emptylabel' => "-----"
-		) );
+		ITILCategory::dropdown(
+				array(
+					'name' => 'itilcategories_id',
+					'rand' => '_tickettransfer',
+					'entity' => $input['entities_id'],
+					'display_emptychoice' => false,
+					'value' => isset($input['itilcategories_id']) ? $input['itilcategories_id'] : '',
+					'condition' => $condition 
+				));
+	}
+
+	/**
+	 * Affiche le dropdown permettant de choisir le mode de transfert
+	 *
+	 * @param array $input
+	 *        	tableau des valeurs à choisir par défaut - itilcategories_id id de la catégorie sélectionnée -
+	 *        	transfer_option option à choisir par défaut, ou ''
+	 */
+	static function showTransferOptions($input) {
+		$config = PluginTickettransferConfig::getConfigValues();
+		
+		$category = new ITILCategory();
+		$category->getFromDB($input['itilcategories_id']);
+		$hasgroup = ! empty($category->fields['groups_id']);
+		
+		$transfer_mode_options = array(
+			self::TRANSFER_MODE_KEEP => __('Keep attribution', 'tickettransfer'),
+			self::TRANSFER_MODE_AUTO => __('Automatic transfer', 'tickettransfer') 
+		);
+		
+		if(! $hasgroup) {
+			echo '<span title="' . __('This category does not allow automatic transfer', 'tickettransfer') . '">';
+			echo $transfer_mode_options[self::TRANSFER_MODE_KEEP];
+			echo '</span>';
+			echo '<input name="transfer_option" type="hidden" value="' . self::TRANSFER_MODE_KEEP . '">';
+		} else {
+			Dropdown::showFromArray("transfer_option", $transfer_mode_options, 
+					array(
+						'value' => $config['default_transfer_mode'] 
+					));
+		}
 	}
 }
 
-
+?>
 
 
 
