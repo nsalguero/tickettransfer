@@ -59,7 +59,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			'itilcategories_id' => $ticket->fields['itilcategories_id'],
 			'is_group_observer' => $ticket->haveAGroup(CommonITILActor::OBSERVER, $_SESSION["glpigroups"]),
 			'is_user_observer' => $ticket->isUser(CommonITILActor::OBSERVER, Session::getLoginUserID()),
-					'transfer_justification' => '',
+			'transfer_justification' => '',
 			'allowed_entities' => $config['allowed_entities']
 		);
 		
@@ -67,7 +67,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 		$groups = $ticket->getGroups(CommonITILActor::ASSIGN);
 		if(count($groups) >= 1) {
 			reset($groups);
-			$form_values['_groups_id_assign'] = current($groups)['groups_id'];
+			$form_values['groups_id_assign'] = current($groups)['groups_id'];
 		}
 		
 		switch($config['default_observer_option']) {
@@ -164,7 +164,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 					'rand' => '_tickettransfer',
 					'entity' => $form_values['current_entities_id'],
 					'display_emptychoice' => false,
-					'value' => $form_values['_groups_id_assign'],
+					'value' => $form_values['groups_id_assign'],
 					'condition' => '`is_assign`' 
 				));
 		?></td>
