@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-02-07 20:04+0100\n"
-"PO-Revision-Date: 2016-02-07 20:04+0100\n"
+"POT-Creation-Date: 2016-02-08 21:16+0100\n"
+"PO-Revision-Date: 2016-02-08 21:16+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <etienne-github@outlook.fr>\n"
 "Language: en_GB\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: front/tickettab.form.php:14
 msgid "Invalid input : "
-msgstr ""
+msgstr "Invalid input : "
 
 #: front/tickettab.form.php:116
 msgid ""
@@ -32,7 +32,7 @@ msgstr ""
 msgid "You must chose a new group to do a transfer"
 msgstr "You must chose a new group to do a transfer"
 
-#: front/tickettab.form.php:243 inc/tickettab.class.php:183
+#: front/tickettab.form.php:243 inc/tickettab.class.php:191
 msgid "Transfer explanation / justification"
 msgstr "Transfer explanation / justification"
 
@@ -89,15 +89,19 @@ msgstr "Force transfer justification"
 msgid "Keep current status"
 msgstr "Keep current status"
 
-#: inc/config.class.php:113
+#: inc/config.class.php:105
+msgid "Yes, but only if I'm not already in an observer group"
+msgstr "Yes, but only if I'm not already in an observer group"
+
+#: inc/config.class.php:114
 msgid "Keep current group"
 msgstr "Keep current group"
 
-#: inc/config.class.php:114 inc/tickettab.class.php:267
+#: inc/config.class.php:115 inc/tickettab.class.php:275
 msgid "Automatic transfer"
 msgstr "Automatic transfer"
 
-#: inc/config.class.php:265
+#: inc/config.class.php:266
 msgid ""
 "Warning, you defined the inherit option together with other option. Only "
 "inherit will but taken into account"
@@ -105,15 +109,15 @@ msgstr ""
 "Warning, you defined the inherit option together with other option. Only "
 "inherit will but taken into account"
 
-#: inc/config.class.php:333 inc/tickettab.class.php:32
+#: inc/config.class.php:334 inc/tickettab.class.php:32
 msgid "Ticket transfer"
 msgstr "Ticket transfer"
 
-#: inc/config.class.php:391
+#: inc/config.class.php:392
 msgid "Ticket transfer plugin settings"
 msgstr "Ticket transfer plugin settings"
 
-#: inc/config.class.php:403
+#: inc/config.class.php:404
 msgid "Inherit from global config"
 msgstr "Inherit from global config"
 
@@ -125,31 +129,43 @@ msgstr "Ticket requalification"
 msgid "Ticket escalation"
 msgstr "Ticket escalation"
 
-#: inc/tickettab.class.php:149
+#: inc/tickettab.class.php:151
 msgid "Transfer mode"
 msgstr "Transfer mode"
 
-#: inc/tickettab.class.php:173
+#: inc/tickettab.class.php:175
 msgid "Keep me observer"
 msgstr "Keep me observer"
 
-#: inc/tickettab.class.php:173
+#: inc/tickettab.class.php:175
 msgid "Add me as observer"
 msgstr "Add me as observer"
 
-#: inc/tickettab.class.php:210
+#: inc/tickettab.class.php:181
+msgid ""
+"This option only sets if you are personnaly observer, but it will not change "
+"observer groups. This means you will stay observer no matter what"
+msgstr ""
+"This option only sets if you are personnaly observer, but it will not change "
+"observer groups. This means you will stay observer no matter what"
+
+#: inc/tickettab.class.php:181
+msgid "You are in an observer group"
+msgstr "You are in an observer group"
+
+#: inc/tickettab.class.php:218
 msgid "Transfer somewhere else"
 msgstr "Transfer somewhere else"
 
-#: inc/tickettab.class.php:211
+#: inc/tickettab.class.php:219
 msgid "Transfer to an other group"
 msgstr "Transfer to an other group"
 
-#: inc/tickettab.class.php:266
+#: inc/tickettab.class.php:274
 msgid "Keep attribution"
 msgstr "Keep attribution"
 
-#: inc/tickettab.class.php:271
+#: inc/tickettab.class.php:279
 msgid "This category does not allow automatic transfer"
 msgstr "This category does not allow automatic transfer"
 

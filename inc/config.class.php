@@ -101,7 +101,8 @@ class PluginTickettransferConfig extends CommonDBTM {
 				'values' => array(
 					'yes' => __('Yes'),
 					'no' => __('No'),
-					'nochange' => __('Keep current status', 'tickettransfer') 
+					'nochange' => __('Keep current status', 'tickettransfer'),
+					'yesifnotingroup' => __('Yes, but only if I\'m not already in an observer group', 'tickettransfer') 
 				),
 				'types' => array(self::TYPE_USER, self::TYPE_GLOBAL),
 				'dbtype' => 'varchar(25)',

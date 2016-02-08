@@ -57,9 +57,8 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			'current_entities_id' => $ticket->fields['entities_id'],
 			'type' => $ticket->fields['type'],
 			'itilcategories_id' => $ticket->fields['itilcategories_id'],
-			// TODO cas où on est obserateur en tant que groupe à traiter
-			'is_observer' => $ticket->isUser(CommonITILActor::OBSERVER, Session::getLoginUserID()) ||
-					 $ticket->haveAGroup(CommonITILActor::OBSERVER, $_SESSION["glpigroups"]),
+			'is_group_observer' => $ticket->haveAGroup(CommonITILActor::OBSERVER, $_SESSION["glpigroups"]),
+			'is_user_observer' => $ticket->isUser(CommonITILActor::OBSERVER, Session::getLoginUserID()),
 					'transfer_justification' => '',
 			'allowed_entities' => $config['allowed_entities']
 		);
@@ -73,7 +72,10 @@ class PluginTickettransferTickettab extends CommonDBTM {
 		
 		switch($config['default_observer_option']) {
 			case 'nochange' :
-				$form_values['observer_option'] = $form_values['is_observer'];
+				$form_values['observer_option'] = $form_values['is_user_observer'];
+				break;
+			case 'yesifnotingroup' :
+				$form_values['observer_option'] = !$form_values['is_group_observer'];
 				break;
 			case 'yes' :
 				$form_values['observer_option'] = true;
@@ -170,10 +172,16 @@ class PluginTickettransferTickettab extends CommonDBTM {
 
 					<tr class="tab_bg_1">
 						<td width="30%">
-									<?php echo $form_values['is_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
+									<?php echo $form_values['is_user_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
 								</td>
 						<td width="70%"><input type="checkbox" name="observer_option"
-							<?php echo $form_values['observer_option'] ? ' checked' : '' ?>>
+							<?php 
+								echo $form_values['observer_option'] ? ' checked>' : '>';
+								if($form_values['is_group_observer']) {
+									echo ' <span title="'.__('This option only sets if you are personnaly observer, but it will not change observer groups. This means you will stay observer no matter what', 'tickettransfer').'">('.__('You are in an observer group', 'tickettransfer').')</span>';
+								}
+							?>
+							 
 						</td>
 					</tr>
 				</table>
