@@ -182,14 +182,14 @@ if(isset($_POST['groups_id_assign'])) {// couvre le cas transfert de groupe ET l
 			$groupAlreadyAssign = true;
 		}
 	}
-		
+	
 	// Déterminer les utilisateurs qui sont dans le nouveau groupe
 	$new_group_users = array();
 	foreach(Group_User::getGroupUsers($_POST['groups_id_assign']) as $user) {
 		$new_group_users[] = $user['id'];
 	}
 	
-		// Ajouter le nouveau groupe
+	// Ajouter le nouveau groupe
 	if(! $groupAlreadyAssign) {
 		$input = array(
 			'id' => $ticket_id,
@@ -206,10 +206,10 @@ if(isset($_POST['groups_id_assign'])) {// couvre le cas transfert de groupe ET l
 		$currentAssignUsers = $ticket->getUsers(CommonITILActor::ASSIGN);
 		foreach($currentAssignUsers as $tu) {
 			if(!in_array($tu['users_id'], $new_group_users)) {
-			$ticket_user->check($tu['id'], 'd');
-			$ticket_user_delete[] = array(
-				'id' => $tu['id'] 
-			);
+				$ticket_user->check($tu['id'], 'd');
+				$ticket_user_delete[] = array(
+					'id' => $tu['id'] 
+				);
 			}
 		}
 	}
@@ -301,10 +301,16 @@ $ticket->__tickettransfer = array(
 	'message' => $_POST['transfer_justification'],
 	'groupchanged' => !$groupAlreadyAssign
 );
-if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_ENTITY && $config['notif_transfer']) {
-	NotificationEvent::raiseEvent('plugin_tickettransfer_transfer', $ticket);
-} else if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_GROUP && $config['notif_group']){
-	NotificationEvent::raiseEvent('plugin_tickettransfer_escalation', $ticket);
+
+if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_ENTITY) {
+	if($config['notif_transfer'] === 'always' || $config['notif_transfer'] === 'ongroupchange' && !$groupAlreadyAssign) {
+		NotificationEvent::raiseEvent('plugin_tickettransfer_transfer', $ticket);
+	}
+} else if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_GROUP) {
+	if($config['notif_group'] === 'always' || 
+			$config['notif_group'] === 'onassinglost' && !in_array(Session::getLoginUserID(), $new_group_users)) {
+		NotificationEvent::raiseEvent('plugin_tickettransfer_escalation', $ticket);
+	}
 }
 
 // rediriger soit vers le ticket, soit vers le tableau des tickets si on a perdu la vision sur ce ticket en particulier.
