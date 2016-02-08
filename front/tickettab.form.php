@@ -183,6 +183,12 @@ if(isset($_POST['groups_id_assign'])) {// couvre le cas transfert de groupe ET l
 		}
 	}
 		
+	// Déterminer les utilisateurs qui sont dans le nouveau groupe
+	$new_group_users = array();
+	foreach(Group_User::getGroupUsers($_POST['groups_id_assign']) as $user) {
+		$new_group_users[] = $user['id'];
+	}
+	
 		// Ajouter le nouveau groupe
 	if(! $groupAlreadyAssign) {
 		$input = array(
@@ -196,14 +202,15 @@ if(isset($_POST['groups_id_assign'])) {// couvre le cas transfert de groupe ET l
 		$ticket->check($ticket_id, 'w', $input);
 		$ticket_inputs[] = $input;
 		
-		// retirer les techniciens existants
-		$currentAssignUsers = $ticket_user->find("tickets_id = $ticket_id AND type = " . CommonITILActor::ASSIGN);
+		// retirer les techniciens existants s'il ne sont pas dans le groupe de destination
 		$currentAssignUsers = $ticket->getUsers(CommonITILActor::ASSIGN);
 		foreach($currentAssignUsers as $tu) {
+			if(!in_array($tu['users_id'], $new_group_users)) {
 			$ticket_user->check($tu['id'], 'd');
 			$ticket_user_delete[] = array(
 				'id' => $tu['id'] 
 			);
+			}
 		}
 	}
 }
