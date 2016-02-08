@@ -14,7 +14,9 @@ class PluginTickettransferConfig extends CommonDBTM {
 	const TYPE_ENTITY = 'entity';
 	const TYPE_PROFILE = 'profile';
 	const TYPE_USER = 'user';
-	const INHERIT_VALUE = '__inherit__';
+	
+	//Le fait que la variable commence par un nombre abscon est important : il faut que lorsqu'elle est comparée à un nombre avec ==, elle ne renvoit jamais vrai (ne pas mettre de nombre abscon revenant à mettre 0)
+	const INHERIT_VALUE = '965482.5125475__inherit__';
 	
 	
 	
