@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-02-08 21:16+0100\n"
-"PO-Revision-Date: 2016-02-08 21:16+0100\n"
+"POT-Creation-Date: 2016-02-13 16:22+0100\n"
+"PO-Revision-Date: 2016-02-13 16:23+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <etienne-github@outlook.fr>\n"
 "Language: en_GB\n"
@@ -32,100 +32,92 @@ msgstr ""
 msgid "You must chose a new group to do a transfer"
 msgstr "You must chose a new group to do a transfer"
 
-#: front/tickettab.form.php:243 inc/tickettab.class.php:191
+#: front/tickettab.form.php:250 inc/tickettab.class.php:191
 msgid "Transfer explanation / justification"
 msgstr "Transfer explanation / justification"
 
-#: front/tickettab.form.php:250
+#: front/tickettab.form.php:257
 msgid "You must give a transfer justification"
 msgstr "You must give a transfer justification"
 
-#: front/tickettab.form.php:282
+#: front/tickettab.form.php:289
 #, php-format
 msgid "%s transfers a ticket"
 msgstr "%s transfers a ticket"
 
-#: front/tickettab.form.php:284
+#: front/tickettab.form.php:291
 msgid "Successful transfer"
 msgstr "Successful transfer"
 
-#: inc/config.class.php:36
-msgid "Allow requalification"
-msgstr "Allow requalification"
-
-#: inc/config.class.php:46
-msgid "Allow escalation"
-msgstr "Allow escalation"
-
-#: inc/config.class.php:56 inc/config.class.php:67
-msgid "Notification on requalification"
-msgstr "Notification on requalification"
-
-#: inc/config.class.php:58 inc/config.class.php:69
-msgid "Always"
-msgstr "Always"
-
-#: inc/config.class.php:59
-msgid "Only when assign group changes"
-msgstr "Only when assign group changes"
-
-#: inc/config.class.php:60 inc/config.class.php:71
-msgid "Never"
-msgstr "Never"
-
-#: inc/config.class.php:70
-msgid "Only when the user doing the transfer is not in destination group"
-msgstr "Only when the user doing the transfer is not in destination group"
-
-#: inc/config.class.php:78
-msgid "Allowed entities"
-msgstr "Allowed entities"
-
-#: inc/config.class.php:90
-msgid "Force transfer justification"
-msgstr "Force transfer justification"
-
-#: inc/config.class.php:104
-msgid "Keep current status"
-msgstr "Keep current status"
-
-#: inc/config.class.php:105
-msgid "Yes, but only if I'm not already in an observer group"
-msgstr "Yes, but only if I'm not already in an observer group"
-
-#: inc/config.class.php:114
-msgid "Keep current group"
-msgstr "Keep current group"
-
-#: inc/config.class.php:115 inc/tickettab.class.php:275
-msgid "Automatic transfer"
-msgstr "Automatic transfer"
-
-#: inc/config.class.php:266
-msgid ""
-"Warning, you defined the inherit option together with other option. Only "
-"inherit will but taken into account"
-msgstr ""
-"Warning, you defined the inherit option together with other option. Only "
-"inherit will but taken into account"
-
-#: inc/config.class.php:334 inc/tickettab.class.php:32
+#: inc/config.class.php:10 inc/tickettab.class.php:32
 msgid "Ticket transfer"
 msgstr "Ticket transfer"
 
-#: inc/config.class.php:392
-msgid "Ticket transfer plugin settings"
-msgstr "Ticket transfer plugin settings"
+#: inc/config.class.php:16
+msgid "Allow requalification"
+msgstr "Allow requalification"
 
-#: inc/config.class.php:404
-msgid "Inherit from global config"
-msgstr "Inherit from global config"
+#: inc/config.class.php:26
+msgid "Allow escalation"
+msgstr "Allow escalation"
 
-#: inc/notification.class.php:26
+#: inc/config.class.php:36 inc/config.class.php:47
+msgid "Notification on requalification"
+msgstr "Notification on requalification"
+
+#: inc/config.class.php:38 inc/config.class.php:49
+msgid "Always"
+msgstr "Always"
+
+#: inc/config.class.php:39
+msgid "Only when assign group changes"
+msgstr "Only when assign group changes"
+
+#: inc/config.class.php:40 inc/config.class.php:51
+msgid "Never"
+msgstr "Never"
+
+#: inc/config.class.php:50
+msgid "Only when the user doing the transfer is not in destination group"
+msgstr "Only when the user doing the transfer is not in destination group"
+
+#: inc/config.class.php:58
+msgid "Allowed entities"
+msgstr "Allowed entities"
+
+#: inc/config.class.php:70
+msgid "Force transfer justification"
+msgstr "Force transfer justification"
+
+#: inc/config.class.php:80
+msgid "Transfer justification prefix"
+msgstr "Transfer justification prefix"
+
+#: inc/config.class.php:84
+msgid "Transfer justification"
+msgstr "Transfer justification"
+
+#: inc/config.class.php:91
+msgid "Keep current status"
+msgstr "Keep current status"
+
+#: inc/config.class.php:92
+msgid "Yes, but only if I'm not already in an observer group"
+msgstr "Yes, but only if I'm not already in an observer group"
+
+#: inc/config.class.php:101
+msgid "Keep current group"
+msgstr "Keep current group"
+
+#: inc/config.class.php:102 inc/tickettab.class.php:275
+msgid "Automatic transfer"
+msgstr "Automatic transfer"
+
+#: inc/notification.class.php:12
 msgid "Ticket requalification"
 msgstr "Ticket requalification"
 
-#: inc/notification.class.php:27
+#: inc/notification.class.php:13
 msgid "Ticket escalation"
 msgstr "Ticket escalation"
 
@@ -172,6 +164,23 @@ msgstr "This category does not allow automatic transfer"
 #: setup.php:24
 msgid "Plugin has been tested only for GLPI 0.84.8"
 msgstr "Plugin has been tested only for GLPI 0.84.8"
+
+#: setup.php:31
+msgid "Plugin requires ConfigManager 1.0"
+msgstr "Plugin requires ConfigManager 1.0"
+
+#~ msgid ""
+#~ "Warning, you defined the inherit option together with other option. Only "
+#~ "inherit will but taken into account"
+#~ msgstr ""
+#~ "Warning, you defined the inherit option together with other option. Only "
+#~ "inherit will but taken into account"
+
+#~ msgid "Ticket transfer plugin settings"
+#~ msgstr "Ticket transfer plugin settings"
+
+#~ msgid "Inherit from global config"
+#~ msgstr "Inherit from global config"
 
 #~ msgid "Notification on escalation"
 #~ msgstr "Notification on escalation"
