@@ -129,7 +129,7 @@ if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_GROUP
  * Vérification des droits / préparation des modifications
  * 
  * Méthode générale : on fait le bilan des modifs demandées en checkant si l'utilisateur à les droits au fur et à mesure, mais sans faire les modifs
- * Si on arrive au bout des vérif (ie l'utilisateur a tous les droits nécessaires), on execute toutes les actions demandées.
+ * Si on arrive au bout des vérifs (ie l'utilisateur a tous les droits nécessaires), on execute toutes les actions demandées.
  * De cette façon, on évite de rester bloqué alors qu'on a déjà modifié des choses
  *********************************************************/
 
@@ -263,7 +263,7 @@ if($_POST['transfer_justification'] != '') {
 
 /* *****************************************************
  * Modifications effectives
- * Les notifications sont désactivées de faÃ§on à grouper les modifications dans une unique notification
+ * Les notifications sont désactivées de façon à grouper les modifications dans une unique notification
  *********************************************************/
 
 $save_mail = $CFG_GLPI["use_mailing"];
@@ -292,7 +292,6 @@ Session::addMessageAfterRedirect(__("Successful transfer", 'tickettransfer'), fa
 unset($_SESSION['plugin']['tickettransfer']['savedPOST']);
 
 // Gestion des notifications
-//TODO réfléchir aux options à passer
 $author = new User();
 $author->getFromDB(Session::getLoginUserID());
 

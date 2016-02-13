@@ -15,11 +15,6 @@ function plugin_version_tickettransfer() {
 	);
 }
 
-function isConfigManagerActivated() {
-	$configManager = new Plugin();
-	return $configManager->getFromDBbyDir("configmanager") && $configManager->fields['state'] == Plugin::ACTIVATED;
-}
-
 /**
  * Fonction de vérification des prérequis
  * @return boolean le plugin peut s'exécuter sur ce GLPI
@@ -32,7 +27,7 @@ function plugin_tickettransfer_check_prerequisites() {
 	
 	//Vérifie la présence de ConfigManager
 	$configManager = new Plugin();
-	if(! isConfigManagerActivated()) {
+	if(! ($configManager->getFromDBbyDir("configmanager") && $configManager->fields['state'] == Plugin::ACTIVATED)) {
 		echo __("Plugin requires ConfigManager 1.0", 'tickettransfer');
 		return false;
 	}
@@ -58,16 +53,12 @@ function plugin_init_tickettransfer() {
 	
 	$PLUGIN_HOOKS['csrf_compliant']['tickettransfer'] = true;
 	
-	Plugin::registerClass('PluginTickettransferConfig', 
-			array(
-				'addtabon' => array(
-					'User',
-					'Preference',
-					'Config',
-					'Entity',
-					'Profile' 
-				) 
-			));
+	Plugin::registerClass('PluginTickettransferConfig', array('addtabon' => array(
+			'User',
+			'Preference',
+			'Config',
+			'Profile' 
+		)));
 	$PLUGIN_HOOKS['config_page']['tickettransfer'] = 'front/config.form.php';
 	
 	// Onglet transfert pour les tickets

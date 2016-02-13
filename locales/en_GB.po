@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: \n"
-"POT-Creation-Date: 2016-02-13 16:22+0100\n"
-"PO-Revision-Date: 2016-02-13 16:23+0100\n"
+"POT-Creation-Date: 2016-02-13 17:08+0100\n"
+"PO-Revision-Date: 2016-02-13 17:08+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <etienne-github@outlook.fr>\n"
 "Language: en_GB\n"
@@ -31,10 +31,6 @@ msgstr ""
 #: front/tickettab.form.php:123
 msgid "You must chose a new group to do a transfer"
 msgstr "You must chose a new group to do a transfer"
-
-#: front/tickettab.form.php:250 inc/tickettab.class.php:191
-msgid "Transfer explanation / justification"
-msgstr "Transfer explanation / justification"
 
 #: front/tickettab.form.php:257
 msgid "You must give a transfer justification"
@@ -109,7 +105,7 @@ msgstr "Yes, but only if I'm not already in an observer group"
 msgid "Keep current group"
 msgstr "Keep current group"
 
-#: inc/config.class.php:102 inc/tickettab.class.php:275
+#: inc/config.class.php:102 inc/tickettab.class.php:266
 msgid "Automatic transfer"
 msgstr "Automatic transfer"
 
@@ -121,19 +117,19 @@ msgstr "Ticket requalification"
 msgid "Ticket escalation"
 msgstr "Ticket escalation"
 
-#: inc/tickettab.class.php:151
+#: inc/tickettab.class.php:148
 msgid "Transfer mode"
 msgstr "Transfer mode"
 
-#: inc/tickettab.class.php:175
+#: inc/tickettab.class.php:170
 msgid "Keep me observer"
 msgstr "Keep me observer"
 
-#: inc/tickettab.class.php:175
+#: inc/tickettab.class.php:170
 msgid "Add me as observer"
 msgstr "Add me as observer"
 
-#: inc/tickettab.class.php:181
+#: inc/tickettab.class.php:176
 msgid ""
 "This option only sets if you are personnaly observer, but it will not change "
 "observer groups. This means you will stay observer no matter what"
@@ -141,23 +137,27 @@ msgstr ""
 "This option only sets if you are personnaly observer, but it will not change "
 "observer groups. This means you will stay observer no matter what"
 
-#: inc/tickettab.class.php:181
+#: inc/tickettab.class.php:176
 msgid "You are in an observer group"
 msgstr "You are in an observer group"
 
-#: inc/tickettab.class.php:218
+#: inc/tickettab.class.php:185
+msgid "Transfer explanation / justification"
+msgstr "Transfer explanation / justification"
+
+#: inc/tickettab.class.php:212
 msgid "Transfer somewhere else"
 msgstr "Transfer somewhere else"
 
-#: inc/tickettab.class.php:219
+#: inc/tickettab.class.php:213
 msgid "Transfer to an other group"
 msgstr "Transfer to an other group"
 
-#: inc/tickettab.class.php:274
+#: inc/tickettab.class.php:265
 msgid "Keep attribution"
 msgstr "Keep attribution"
 
-#: inc/tickettab.class.php:279
+#: inc/tickettab.class.php:270
 msgid "This category does not allow automatic transfer"
 msgstr "This category does not allow automatic transfer"
 
@@ -168,124 +168,3 @@ msgstr "Plugin has been tested only for GLPI 0.84.8"
 #: setup.php:31
 msgid "Plugin requires ConfigManager 1.0"
 msgstr "Plugin requires ConfigManager 1.0"
-
-#~ msgid ""
-#~ "Warning, you defined the inherit option together with other option. Only "
-#~ "inherit will but taken into account"
-#~ msgstr ""
-#~ "Warning, you defined the inherit option together with other option. Only "
-#~ "inherit will but taken into account"
-
-#~ msgid "Ticket transfer plugin settings"
-#~ msgstr "Ticket transfer plugin settings"
-
-#~ msgid "Inherit from global config"
-#~ msgstr "Inherit from global config"
-
-#~ msgid "Notification on escalation"
-#~ msgstr "Notification on escalation"
-
-#~ msgid "Default 'stay observer' value"
-#~ msgstr "Default 'stay observer' value"
-
-#~ msgid "Default 'transfer mode' for group on requalification"
-#~ msgstr "Default 'transfer mode' for group on requalification"
-
-#~ msgid ""
-#~ "Warning, you defined the inherit option together with other option for "
-#~ "allowed entities. Only inherit will but taken into account"
-#~ msgstr ""
-#~ "Warning, you defined the inherit option together with other option for "
-#~ "allowed entities. Only inherit will but taken into account"
-
-#~ msgid "Inherit from global config :"
-#~ msgstr "Inherit from global config :"
-
-#~ msgid "Allow ticket transfer to entity"
-#~ msgstr "Allow ticket transfer to entity"
-
-#~ msgid "Transfer to an other entity"
-#~ msgstr "Transfer to an other entity"
-
-#~ msgid "Change my role"
-#~ msgstr "Change my role"
-
-#~ msgid ""
-#~ "This option allows you to change your role on the ticket after the "
-#~ "transfer"
-#~ msgstr ""
-#~ "This option allows you to change your role on the ticket after the "
-#~ "transfer"
-
-#~ msgid ""
-#~ "Because your belong to one of the observer groups, you cannot stop being "
-#~ "an observer"
-#~ msgstr ""
-#~ "Because your belong to one of the observer groups, you cannot stop being "
-#~ "an observer"
-
-#~ msgid "Observer only"
-#~ msgstr "Observer only"
-
-#~ msgid "Assigned and observer"
-#~ msgstr "Assigned and observer"
-
-#~ msgid "Assigned only"
-#~ msgstr "Assigned only"
-
-#~ msgid "No role anymore"
-#~ msgstr "No role anymore"
-
-#~ msgid "current role"
-#~ msgstr "current role"
-
-#~ msgid "Transfer explanation : \\n"
-#~ msgstr "Transfer explanation : \\n"
-
-#~ msgid "Ticket Transfer"
-#~ msgstr "Ticket Transfer"
-
-#~ msgid " It's not a transfer if you don't change the ticket location !"
-#~ msgstr " It's not a transfer if you don't change the ticket location !"
-
-#~ msgid "Profile tab name"
-#~ msgstr "Ticket transfer"
-
-#~ msgid "No transfer : category not defined"
-#~ msgstr "No transfer : category not defined"
-
-#~ msgid "Allow ticket transfer"
-#~ msgstr "Allow ticket transfer"
-
-#~ msgid "Ticket tab name"
-#~ msgstr "Ticket transfer"
-
-#~ msgid "Destination entity"
-#~ msgstr "Destination entity"
-
-#~ msgid "Category"
-#~ msgstr "Category"
-
-#~ msgctxt "tickettransfer"
-#~ msgid "Profile tab name"
-#~ msgstr "Ticket transfer"
-
-#~ msgctxt "tickettransfer"
-#~ msgid "Ticket transfer plugin settings"
-#~ msgstr "Settings for plugin Ticket transfer"
-
-#~ msgctxt "tickettransfer"
-#~ msgid "Allow ticket transfer"
-#~ msgstr "Allow ticket transfer"
-
-#~ msgctxt "tickettransfer"
-#~ msgid "Transfer to an other entity"
-#~ msgstr "Transfer to an other entity"
-
-#~ msgctxt "tickettransfer"
-#~ msgid "Plugin has been tested only for GLPI 0.84.8"
-#~ msgstr "Plugin has been tested only for GLPI 0.84.8"
-
-#~ msgctxt "tickettransfer"
-#~ msgid "Ticket tab name"
-#~ msgstr "Ticket transfer"
