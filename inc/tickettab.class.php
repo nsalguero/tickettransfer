@@ -35,7 +35,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	}
 
 	static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
-		if($item->getType() == 'Ticket' && self::canTansfer($item)) {
+		if($item->getType() == 'Ticket') {
 			self::showForm($item);
 		}
 		return true;
@@ -119,61 +119,56 @@ class PluginTickettransferTickettab extends CommonDBTM {
 					<tr class="tab_bg_1 tickettransferentity">
 						<td width="30%"><?php echo __('Destination entity'); ?></td>
 						<td width="70%"><?php
-		PluginTickettransferEntitiesdropdown::entitiesDropdown(implode(',', $form_values['allowed_entities']), 
-				array(
-					'value' => $form_values['entities_id'],
-					'name' => 'entities_id',
-					'rand' => '_tickettransfer'
-				));
-		?></td>
+							PluginTickettransferEntitiesdropdown::entitiesDropdown($form_values['allowed_entities'], array(
+									'value' => $form_values['entities_id'],
+									'name' => 'entities_id',
+									'rand' => '_tickettransfer'
+								));
+						?></td>
 					</tr>
 
 					<tr class="tab_bg_2 tickettransferentity">
 						<td width="30%"><?php echo __('Type'); ?></td>
 						<td width="70%"><?php
-		Ticket::dropdownType('type', 
-				array(
-					'rand' => '_tickettransfer',
-					'value' => $form_values['type'] 
-				));
-		?></td>
+							Ticket::dropdownType('type', array(
+									'rand' => '_tickettransfer',
+									'value' => $form_values['type'] 
+								));
+						?></td>
 					</tr>
 
 					<tr class="tab_bg_1 tickettransferentity">
 						<td width="30%"><?php echo __('Category'); ?></td>
-						<td width="70%"><span
-							id='selectZone_itilcategories_id_tickettransfer'>
-									<?php self::categoriesDropdown($form_values); ?>
-								</span></td>
+						<td width="70%"><span id='selectZone_itilcategories_id_tickettransfer'>
+							<?php self::categoriesDropdown($form_values); ?>
+						</span></td>
 					</tr>
 
 					<tr class="tab_bg_2 tickettransferentity">
 						<td width="30%"><?php echo __('Transfer mode', 'tickettransfer'); ?></td>
-						<td width="70%"><span
-							id="selectZone_transfer_options_tickettransfer">
-									<?php self::showTransferOptions($form_values); ?>
-								</span></td>
+						<td width="70%"><span id="selectZone_transfer_options_tickettransfer">
+							<?php self::showTransferOptions($form_values); ?>
+						</span></td>
 					</tr>
 
 					<tr class="tab_bg_2 tickettransfergroup">
 						<td width="30%"><?php echo __('Destination group'); ?></td>
 						<td width="70%"><?php
-		Group::dropdown(
-				array(
-					'name' => 'groups_id_assign',
-					'rand' => '_tickettransfer',
-					'entity' => $form_values['current_entities_id'],
-					'display_emptychoice' => false,
-					'value' => $form_values['groups_id_assign'],
-					'condition' => '`is_assign`' 
-				));
-		?></td>
+							Group::dropdown(array(
+										'name' => 'groups_id_assign',
+										'rand' => '_tickettransfer',
+										'entity' => $form_values['current_entities_id'],
+										'display_emptychoice' => false,
+										'value' => $form_values['groups_id_assign'],
+										'condition' => '`is_assign`' 
+									));
+						?></td>
 					</tr>
 
 					<tr class="tab_bg_1">
 						<td width="30%">
-									<?php echo $form_values['is_user_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
-								</td>
+							<?php echo $form_values['is_user_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
+						</td>
 						<td width="70%"><input type="checkbox" name="observer_option"
 							<?php 
 								echo $form_values['observer_option'] ? ' checked>' : '>';
@@ -181,23 +176,22 @@ class PluginTickettransferTickettab extends CommonDBTM {
 									echo ' <span title="'.__('This option only sets if you are personnaly observer, but it will not change observer groups. This means you will stay observer no matter what', 'tickettransfer').'">('.__('You are in an observer group', 'tickettransfer').')</span>';
 								}
 							?>
-							 
 						</td>
 					</tr>
 				</table>
 			</td>
 
 			<td>
-						<?php echo __('Transfer explanation / justification', 'tickettransfer'); ?> :</br>
+				<?php echo __('Transfer explanation / justification', 'tickettransfer'); ?> :</br>
 				<textarea name="transfer_justification" cols="60" rows="6"><?php echo $form_values['transfer_justification']; ?></textarea>
 			</td>
 		</tr>
 
 		<tr class="tab_bg_1">
-			<td class="center" colspan="2"><input type="hidden" name="id"
-				value=<?php echo $ticket->getID(); ?>> <input type="submit"
-				name="transfer_ticket" value="<?php echo __('Transfer'); ?>"
-				class="submit"></td>
+			<td class="center" colspan="2">
+				<input type="hidden" name="id" value=<?php echo $ticket->getID(); ?>>
+				<input type="submit" name="transfer_ticket" value="<?php echo __('Transfer'); ?>" class="submit">
+			</td>
 		</tr>
 	</table>
 		<?php
@@ -221,14 +215,12 @@ class PluginTickettransferTickettab extends CommonDBTM {
 		
 		if(! $has2options) {
 			echo $transfer_type_options[$value];
-			echo '<input id="dropdown_transfer_type_tickettransfer" name="transfer_type" type="hidden" value="' . $value .
-					 '">';
+			echo '<input id="dropdown_transfer_type_tickettransfer" name="transfer_type" type="hidden" value="' . $value . '">';
 		} else {
-			Dropdown::showFromArray("transfer_type", $transfer_type_options, 
-					array(
-						'rand' => '_tickettransfer',
-						'value' => $value 
-					));
+			Dropdown::showFromArray("transfer_type", $transfer_type_options, array(
+					'rand' => '_tickettransfer',
+					'value' => $value 
+				));
 		}
 	}
 
@@ -245,15 +237,14 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			$condition .= " AND `is_helpdeskvisible`='1'";
 		}
 		
-		ITILCategory::dropdown(
-				array(
-					'name' => 'itilcategories_id',
-					'rand' => '_tickettransfer',
-					'entity' => $input['entities_id'],
-					'display_emptychoice' => false,
-					'value' => isset($input['itilcategories_id']) ? $input['itilcategories_id'] : '',
-					'condition' => $condition 
-				));
+		ITILCategory::dropdown(	array(
+				'name' => 'itilcategories_id',
+				'rand' => '_tickettransfer',
+				'entity' => $input['entities_id'],
+				'display_emptychoice' => false,
+				'value' => isset($input['itilcategories_id']) ? $input['itilcategories_id'] : '',
+				'condition' => $condition 
+			));
 	}
 
 	/**
@@ -281,10 +272,9 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			echo '</span>';
 			echo '<input name="transfer_option" type="hidden" value="' . self::TRANSFER_MODE_KEEP . '">';
 		} else {
-			Dropdown::showFromArray("transfer_option", $transfer_mode_options, 
-					array(
-						'value' => $config['default_transfer_mode'] 
-					));
+			Dropdown::showFromArray("transfer_option", $transfer_mode_options, array(
+					'value' => $config['default_transfer_mode'] 
+				));
 		}
 	}
 }
