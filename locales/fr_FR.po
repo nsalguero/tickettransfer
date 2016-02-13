@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
-"POT-Creation-Date: 2016-02-08 21:17+0100\n"
-"PO-Revision-Date: 2016-02-08 21:18+0100\n"
+"POT-Creation-Date: 2016-02-13 16:23+0100\n"
+"PO-Revision-Date: 2016-02-13 16:25+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
@@ -32,103 +32,95 @@ msgstr ""
 msgid "You must chose a new group to do a transfer"
 msgstr "Vous devez choisir un nouveau groupe pour faire une escalade"
 
-#: front/tickettab.form.php:243 inc/tickettab.class.php:191
+#: front/tickettab.form.php:250 inc/tickettab.class.php:191
 msgid "Transfer explanation / justification"
 msgstr "Explication / justification du transfert"
 
-#: front/tickettab.form.php:250
+#: front/tickettab.form.php:257
 msgid "You must give a transfer justification"
 msgstr "Vous devez obligatoirement justifier le transfert"
 
-#: front/tickettab.form.php:282
+#: front/tickettab.form.php:289
 #, php-format
 msgid "%s transfers a ticket"
 msgstr "%s a transféré un ticket"
 
-#: front/tickettab.form.php:284
+#: front/tickettab.form.php:291
 msgid "Successful transfer"
 msgstr "Transfert réussi"
 
-#: inc/config.class.php:36
+#: inc/config.class.php:10 inc/tickettab.class.php:32
+msgid "Ticket transfer"
+msgstr "Ticket transfer"
+
+#: inc/config.class.php:16
 msgid "Allow requalification"
 msgstr "Autoriser la requalification"
 
-#: inc/config.class.php:46
+#: inc/config.class.php:26
 msgid "Allow escalation"
 msgstr "Autoriser l'escalade"
 
-#: inc/config.class.php:56 inc/config.class.php:67
+#: inc/config.class.php:36 inc/config.class.php:47
 msgid "Notification on requalification"
 msgstr "Notification lors d'une requalification"
 
-#: inc/config.class.php:58 inc/config.class.php:69
+#: inc/config.class.php:38 inc/config.class.php:49
 msgid "Always"
 msgstr "Toujours"
 
-#: inc/config.class.php:59
+#: inc/config.class.php:39
 msgid "Only when assign group changes"
 msgstr "Seulement si le groupe assigné change"
 
-#: inc/config.class.php:60 inc/config.class.php:71
+#: inc/config.class.php:40 inc/config.class.php:51
 msgid "Never"
 msgstr "Jamais"
 
-#: inc/config.class.php:70
+#: inc/config.class.php:50
 msgid "Only when the user doing the transfer is not in destination group"
 msgstr ""
 "Seulement si l'utilisateur faisant l'excalade n'est pas dans le groupe de "
 "destination"
 
-#: inc/config.class.php:78
+#: inc/config.class.php:58
 msgid "Allowed entities"
 msgstr "Entités vers lesquelles le transfert est aurtorisé"
 
-#: inc/config.class.php:90
+#: inc/config.class.php:70
 msgid "Force transfer justification"
 msgstr "Forcer l'utilisateur à justifier les transferts"
 
-#: inc/config.class.php:104
+#: inc/config.class.php:80
+msgid "Transfer justification prefix"
+msgstr "Préfixe pour la justification des transferts"
+
+#: inc/config.class.php:84
+msgid "Transfer justification"
+msgstr "Justification du transfert"
+
+#: inc/config.class.php:91
 msgid "Keep current status"
 msgstr "Conserver la situation actuelle"
 
-#: inc/config.class.php:105
+#: inc/config.class.php:92
 msgid "Yes, but only if I'm not already in an observer group"
 msgstr ""
 "Oui, mais seulement si je ne fais pas déjà partie d'un groupe d'observateurs"
 
-#: inc/config.class.php:114
+#: inc/config.class.php:101
 msgid "Keep current group"
 msgstr "Conserver le groupe actuel"
 
-#: inc/config.class.php:115 inc/tickettab.class.php:275
+#: inc/config.class.php:102 inc/tickettab.class.php:275
 msgid "Automatic transfer"
 msgstr "Transfert automatique"
 
-#: inc/config.class.php:266
-msgid ""
-"Warning, you defined the inherit option together with other option. Only "
-"inherit will but taken into account"
-msgstr ""
-"Attention, vous avec défini l'option 'hériter' en même temps que d'autres "
-"options. Seul l'option 'hériter' sera prise en compte."
-
-#: inc/config.class.php:334 inc/tickettab.class.php:32
-msgid "Ticket transfer"
-msgstr "Ticket transfer"
-
-#: inc/config.class.php:392
-msgid "Ticket transfer plugin settings"
-msgstr "Paramétrage du plugin Ticket transfer"
-
-#: inc/config.class.php:404
-msgid "Inherit from global config"
-msgstr "Hériter de la configuration globale"
-
-#: inc/notification.class.php:26
+#: inc/notification.class.php:12
 msgid "Ticket requalification"
 msgstr "Requalification d'un ticket"
 
-#: inc/notification.class.php:27
+#: inc/notification.class.php:13
 msgid "Ticket escalation"
 msgstr "Escalade d'un ticket"
 
@@ -176,6 +168,23 @@ msgstr "Cette catégorie ne permet pas le transfert automatique du ticket"
 #: setup.php:24
 msgid "Plugin has been tested only for GLPI 0.84.8"
 msgstr "Ce plugin n'a été testé que pour GLPI 0.84.8"
+
+#: setup.php:31
+msgid "Plugin requires ConfigManager 1.0"
+msgstr "Ce plugin requiert ConfigManager 1.0"
+
+#~ msgid ""
+#~ "Warning, you defined the inherit option together with other option. Only "
+#~ "inherit will but taken into account"
+#~ msgstr ""
+#~ "Attention, vous avec défini l'option 'hériter' en même temps que d'autres "
+#~ "options. Seul l'option 'hériter' sera prise en compte."
+
+#~ msgid "Ticket transfer plugin settings"
+#~ msgstr "Paramétrage du plugin Ticket transfer"
+
+#~ msgid "Inherit from global config"
+#~ msgstr "Hériter de la configuration globale"
 
 #~ msgid "Notification on escalation"
 #~ msgstr "Notification lors d'une escalade"

@@ -76,6 +76,13 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'dbtype' => 'varchar(25)',
 				'default' => '1'
 			),
+			'justification_prefix' => array(
+				'text' => __('Transfer justification prefix', 'tickettransfer'),
+				'values' => 'text input',
+				'types' => array(self::TYPE_PROFILE, self::TYPE_GLOBAL),
+				'dbtype' => 'varchar(250)',
+				'default' => __('Transfer justification', 'tickettransfer')
+			),
 			'default_observer_option' => array(
 				'text' => __('Default \'stay observer\' value', 'tickettransfer', 'tickettransfer'),
 				'values' => array(

@@ -247,7 +247,7 @@ if(!$_POST['observer_option'] && $ticket->isUser(CommonITILActor::OBSERVER, $use
 $fup = new TicketFollowup();
 if($_POST['transfer_justification'] != '') {	
 	$fup_input = array(
-		'content' => __('Transfer explanation / justification', 'tickettransfer') . " : \n" . $_POST['transfer_justification'],
+		'content' => $config['justification_prefix'] . ($config['justification_prefix']?' : \n':'') . $_POST['transfer_justification'],
 		'tickets_id' => $ticket_id,
 		'requesttypes_id' => '1',
 		'is_private' => '0'
