@@ -8,5 +8,5 @@ if(isset($_POST['update'])) {
 	$config->update($_POST);
 	Html::back();
 } else {
-	Html::redirect($CFG_GLPI["root_doc"]."/front/config.form.php?forcetab=".urlencode('PluginTickettransferConfig$1'));
+	Html::redirect($CFG_GLPI["root_doc"]."/front/config.form.php?forcetab=".urlencode('PluginTickettransferConfig$0'));
 }
