@@ -26,8 +26,7 @@ function plugin_tickettransfer_check_prerequisites() {
 	}
 	
 	//Vérifie la présence de ConfigManager
-	$configManager = new Plugin();
-	if(! ($configManager->getFromDBbyDir("configmanager") && $configManager->fields['state'] == Plugin::ACTIVATED)) {
+	if(!(new Plugin())->isActivated('configmanager')) {
 		echo __("Plugin requires ConfigManager 1.0", 'tickettransfer');
 		return false;
 	}
@@ -59,7 +58,10 @@ function plugin_init_tickettransfer() {
 			'Config',
 			'Profile' 
 		)));
-	$PLUGIN_HOOKS['config_page']['tickettransfer'] = 'front/config.form.php';
+	
+	if((new Plugin())->isActivated('tickettransfer')) {
+		$PLUGIN_HOOKS['config_page']['tickettransfer'] = "../../front/config.form.php?forcetab=" . urlencode('PluginTickettransferConfig$0');
+	}
 	
 	// Onglet transfert pour les tickets
 	Plugin::registerClass('PluginTickettransferTickettab', array(

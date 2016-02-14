@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
-"POT-Creation-Date: 2016-02-13 17:09+0100\n"
-"PO-Revision-Date: 2016-02-13 17:09+0100\n"
+"POT-Creation-Date: 2016-02-14 22:18+0100\n"
+"PO-Revision-Date: 2016-02-14 22:18+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
@@ -169,6 +169,6 @@ msgstr "Cette catégorie ne permet pas le transfert automatique du ticket"
 msgid "Plugin has been tested only for GLPI 0.84.8"
 msgstr "Ce plugin n'a été testé que pour GLPI 0.84.8"
 
-#: setup.php:31
+#: setup.php:30
 msgid "Plugin requires ConfigManager 1.0"
 msgstr "Ce plugin requiert ConfigManager 1.0"
