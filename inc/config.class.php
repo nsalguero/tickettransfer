@@ -6,13 +6,14 @@
  * @author Etiennef
  */
 class PluginTickettransferConfig extends PluginConfigmanagerConfig {
-	function getName($options = array()) {
+	static function getPluginName() {
 		return __("Ticket transfer", 'tickettransfer');
 	}
 	
 	static function makeConfigParams() {
 		$tmp = array(
 			'allow_transfer' => array(
+				'type' => 'dropdown',
 				'text' => __('Allow requalification', 'tickettransfer'),
 				'values' => array(
 					'1' => Dropdown::getYesNo('1'),
@@ -23,6 +24,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'default' => '0'
 			),
 			'allow_group' => array(
+				'type' => 'dropdown',
 				'text' => __('Allow escalation', 'tickettransfer'),
 				'values' => array(
 					'1' => Dropdown::getYesNo('1'),
@@ -33,6 +35,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'default' => '0'
 			),
 			'notif_transfer' => array(
+				'type' => 'dropdown',
 				'text' => __('Notification on requalification', 'tickettransfer'),
 				'values' => array(
 					'always' => __('Always', 'tickettransfer'),
@@ -44,6 +47,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'default' => 'never'
 			),
 			'notif_group' => array(
+				'type' => 'dropdown',
 				'text' => __('Notification on requalification', 'tickettransfer'),
 				'values' => array(
 					'always' => __('Always', 'tickettransfer'),
@@ -55,6 +59,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'default' => 'never'
 			),
 			'allowed_entities' => array(
+				'type' => 'dropdown',
 				'text' => __('Allowed entities', 'tickettransfer'),
 				'values' => Dropdown::getDropdownArrayNames(Entity::getTable(), $_SESSION['glpiactiveentities']),
 				'types' => array(self::TYPE_PROFILE, self::TYPE_GLOBAL),
@@ -67,6 +72,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 			 	)
 			),
 			'force_justification' => array(
+				'type' => 'dropdown',
 				'text' => __('Force transfer justification', 'tickettransfer'),
 				'values' => array(
 					'1' => Dropdown::getYesNo('1'),
@@ -77,13 +83,14 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'default' => '1'
 			),
 			'justification_prefix' => array(
+				'type' => 'text input',
 				'text' => __('Transfer justification prefix', 'tickettransfer'),
-				'values' => 'text input',
 				'types' => array(self::TYPE_PROFILE, self::TYPE_GLOBAL),
 				'dbtype' => 'varchar(250)',
 				'default' => __('Transfer justification', 'tickettransfer')
 			),
 			'default_observer_option' => array(
+				'type' => 'dropdown',
 				'text' => __('Default \'stay observer\' value', 'tickettransfer', 'tickettransfer'),
 				'values' => array(
 					'yes' => __('Yes'),
@@ -96,6 +103,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'default' => 'nochange'
 			),
 			'default_transfer_mode' => array(
+				'type' => 'dropdown',
 				'text' => __('Default \'transfer mode\' for group on requalification', 'tickettransfer', 'tickettransfer'),
 				'values' => array(
 					'keep' => __('Keep current group', 'tickettransfer'),
