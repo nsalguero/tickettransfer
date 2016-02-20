@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
-"POT-Creation-Date: 2016-02-14 22:18+0100\n"
-"PO-Revision-Date: 2016-02-14 22:18+0100\n"
+"POT-Creation-Date: 2016-02-20 13:42+0100\n"
+"PO-Revision-Date: 2016-02-20 13:43+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
@@ -45,33 +45,33 @@ msgstr "%s a transféré un ticket"
 msgid "Successful transfer"
 msgstr "Transfert réussi"
 
-#: inc/config.class.php:10 inc/tickettab.class.php:32
-msgid "Ticket transfer"
-msgstr "Ticket transfer"
-
-#: inc/config.class.php:16
+#: inc/config.class.php:13
 msgid "Allow requalification"
 msgstr "Autoriser la requalification"
 
-#: inc/config.class.php:26
+#: inc/config.class.php:24
 msgid "Allow escalation"
 msgstr "Autoriser l'escalade"
 
-#: inc/config.class.php:36 inc/config.class.php:47
+#: inc/config.class.php:35
 msgid "Notification on requalification"
 msgstr "Notification lors d'une requalification"
 
-#: inc/config.class.php:38 inc/config.class.php:49
+#: inc/config.class.php:37 inc/config.class.php:49
 msgid "Always"
 msgstr "Toujours"
 
-#: inc/config.class.php:39
+#: inc/config.class.php:38
 msgid "Only when assign group changes"
 msgstr "Seulement si le groupe assigné change"
 
-#: inc/config.class.php:40 inc/config.class.php:51
+#: inc/config.class.php:39 inc/config.class.php:51
 msgid "Never"
 msgstr "Jamais"
+
+#: inc/config.class.php:47
+msgid "Notification on escalation"
+msgstr "Notification lors d'une escalade"
 
 #: inc/config.class.php:50
 msgid "Only when the user doing the transfer is not in destination group"
@@ -79,36 +79,36 @@ msgstr ""
 "Seulement si l'utilisateur faisant l'excalade n'est pas dans le groupe de "
 "destination"
 
-#: inc/config.class.php:58
+#: inc/config.class.php:59
 msgid "Allowed entities"
 msgstr "Entités vers lesquelles le transfert est aurtorisé"
 
-#: inc/config.class.php:70
+#: inc/config.class.php:72
 msgid "Force transfer justification"
 msgstr "Forcer l'utilisateur à justifier les transferts"
 
-#: inc/config.class.php:80
+#: inc/config.class.php:83
 msgid "Transfer justification prefix"
 msgstr "Préfixe pour la justification des transferts"
 
-#: inc/config.class.php:84
+#: inc/config.class.php:86
 msgid "Transfer justification"
 msgstr "Justification du transfert"
 
-#: inc/config.class.php:91
+#: inc/config.class.php:94
 msgid "Keep current status"
 msgstr "Conserver la situation actuelle"
 
-#: inc/config.class.php:92
+#: inc/config.class.php:95
 msgid "Yes, but only if I'm not already in an observer group"
 msgstr ""
 "Oui, mais seulement si je ne fais pas déjà partie d'un groupe d'observateurs"
 
-#: inc/config.class.php:101
+#: inc/config.class.php:105
 msgid "Keep current group"
 msgstr "Conserver le groupe actuel"
 
-#: inc/config.class.php:102 inc/tickettab.class.php:266
+#: inc/config.class.php:106 inc/tickettab.class.php:266
 msgid "Automatic transfer"
 msgstr "Transfert automatique"
 
@@ -119,6 +119,10 @@ msgstr "Requalification d'un ticket"
 #: inc/notification.class.php:13
 msgid "Ticket escalation"
 msgstr "Escalade d'un ticket"
+
+#: inc/tickettab.class.php:32
+msgid "Ticket transfer"
+msgstr "Ticket transfer"
 
 #: inc/tickettab.class.php:148
 msgid "Transfer mode"

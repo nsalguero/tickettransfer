@@ -6,10 +6,6 @@
  * @author Etiennef
  */
 class PluginTickettransferConfig extends PluginConfigmanagerConfig {
-	static function getPluginName() {
-		return __("Ticket transfer", 'tickettransfer');
-	}
-	
 	static function makeConfigParams() {
 		$tmp = array(
 			'allow_transfer' => array(
@@ -48,7 +44,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 			),
 			'notif_group' => array(
 				'type' => 'dropdown',
-				'text' => __('Notification on requalification', 'tickettransfer'),
+				'text' => __('Notification on escalation', 'tickettransfer'),
 				'values' => array(
 					'always' => __('Always', 'tickettransfer'),
 					'onassinglost' => __('Only when the user doing the transfer is not in destination group', 'tickettransfer'),
