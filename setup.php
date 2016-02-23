@@ -60,7 +60,7 @@ function plugin_init_tickettransfer() {
 		)));
 	
 	if((new Plugin())->isActivated('tickettransfer')) {
-		$PLUGIN_HOOKS['config_page']['tickettransfer'] = "../../front/config.form.php?forcetab=" . urlencode('PluginTickettransferConfig$0');
+		$PLUGIN_HOOKS['config_page']['tickettransfer'] = "../../front/config.form.php?forcetab=" . urlencode('PluginTickettransferConfig$1');
 	}
 	
 	// Onglet transfert pour les tickets
