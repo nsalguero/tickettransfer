@@ -29,7 +29,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 
 	function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
 		if($item->getType() == 'Ticket' && self::canTansfer($item)) {
-			return __("Ticket transfer", 'tickettransfer');
+			return __('Ticket transfer', 'tickettransfer');
 		}
 		return '';
 	}

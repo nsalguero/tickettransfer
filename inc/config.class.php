@@ -92,7 +92,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'type' => 'dropdown',
 				'types' => array(self::TYPE_USER, self::TYPE_GLOBAL),
 				'maxlength' => 25,
-				'text' => __('Default \'stay observer\' value', 'tickettransfer', 'tickettransfer'),
+				'text' => __('Default \'stay observer\' value', 'tickettransfer'),
 				'values' => array(
 					'yes' => __('Yes'),
 					'no' => __('No'),
@@ -105,7 +105,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 				'type' => 'dropdown',
 				'types' => array(self::TYPE_USER, self::TYPE_PROFILE, self::TYPE_GLOBAL),
 				'maxlength' => 25,
-				'text' => __('Default \'transfer mode\' for group on requalification', 'tickettransfer', 'tickettransfer'),
+				'text' => __('Default \'transfer mode\' for group on requalification', 'tickettransfer'),
 				'values' => array(
 					'keep' => __('Keep current group', 'tickettransfer'),
 					'auto' => __('Automatic transfer', 'tickettransfer') 

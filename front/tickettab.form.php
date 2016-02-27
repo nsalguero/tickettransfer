@@ -11,7 +11,7 @@ $config = PluginTickettransferConfig::getConfigValues();
  * Validation des champs (sauf tentative de hack, devrait toujours être bon)
  *********************************************************/ 
 function onInvalidInput($param='') {
-	Session::addMessageAfterRedirect(__("Invalid input : ", "tickettransfer").$param, false, ERROR);
+	Session::addMessageAfterRedirect(__('Invalid input : ', 'tickettransfer').$param, false, ERROR);
 	Html::back();
 }
 
@@ -113,14 +113,14 @@ if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_ENTIT
 		$_POST['entities_id'] == $ticket->getField('entities_id') &&
 		$_POST['type'] == $ticket->getField('type') &&
 		$_POST['itilcategories_id'] == $ticket->getField('itilcategories_id')) {
-	Session::addMessageAfterRedirect(__("You must change the ticket location to do a transfer (at least one in entity, type or category)", 'tickettransfer'), false, ERROR);
+	Session::addMessageAfterRedirect(__('You must change the ticket location to do a transfer (at least one in entity, type or category)', 'tickettransfer'), false, ERROR);
 	Html::back();
 }
 
 if($_POST['transfer_type'] == PluginTickettransferTickettab::TRANSFER_TYPE_GROUP &&
 		$ticket->haveAGroup(CommonITILActor::ASSIGN, array($_POST['groups_id_assign']))
 		) {
-	Session::addMessageAfterRedirect(__("You must chose a new group to do a transfer", 'tickettransfer'), false, ERROR);
+	Session::addMessageAfterRedirect(__('You must chose a new group to do a transfer', 'tickettransfer'), false, ERROR);
 	Html::back();
 }
 
@@ -288,7 +288,7 @@ Event::log($ticket_id, "ticket", 4, "tracking",
 		// TRANS: %s is the user login
 		sprintf(__('%s transfers a ticket', 'tickettransfer'), $_SESSION["glpiname"]));
 
-Session::addMessageAfterRedirect(__("Successful transfer", 'tickettransfer'), false, INFO);
+Session::addMessageAfterRedirect(__('Successful transfer', 'tickettransfer'), false, INFO);
 unset($_SESSION['plugin']['tickettransfer']['savedPOST']);
 
 // Gestion des notifications

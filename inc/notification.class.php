@@ -9,8 +9,8 @@ class PluginTickettransferNotification {
 	 * @param NotificationTargetTicket $target        	
 	 */
 	static function addEvents(NotificationTargetTicket $target) {
-		$target->events['plugin_tickettransfer_transfer'] = __("Ticket requalification", 'tickettransfer');
-		$target->events['plugin_tickettransfer_escalation'] = __("Ticket escalation", 'tickettransfer');
+		$target->events['plugin_tickettransfer_transfer'] = __('Ticket requalification', 'tickettransfer');
+		$target->events['plugin_tickettransfer_escalation'] = __('Ticket escalation', 'tickettransfer');
 	}
 
 	/**

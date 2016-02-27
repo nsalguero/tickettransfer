@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
-"POT-Creation-Date: 2016-02-27 12:28+0100\n"
-"PO-Revision-Date: 2016-02-27 12:30+0100\n"
+"POT-Creation-Date: 2016-02-27 16:00+0100\n"
+"PO-Revision-Date: 2016-02-27 16:01+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
@@ -99,6 +99,10 @@ msgstr "Préfixe pour la justification des transferts"
 msgid "Transfer justification"
 msgstr "Justification du transfert"
 
+#: inc/config.class.php:95
+msgid "Default 'stay observer' value"
+msgstr "Valeur par défaut pour 'rester observateur'"
+
 #: inc/config.class.php:99
 msgid "Keep current status"
 msgstr "Conserver la situation actuelle"
@@ -107,6 +111,10 @@ msgstr "Conserver la situation actuelle"
 msgid "Yes, but only if I'm not already in an observer group"
 msgstr ""
 "Oui, mais seulement si je ne fais pas déjà partie d'un groupe d'observateurs"
+
+#: inc/config.class.php:108
+msgid "Default 'transfer mode' for group on requalification"
+msgstr "Mode de transfert préféré"
 
 #: inc/config.class.php:110
 msgid "Keep current group"

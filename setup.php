@@ -27,12 +27,12 @@ function plugin_tickettransfer_check_prerequisites() {
 	
 	//Vérifie la présence de ConfigManager
 	if(!(new Plugin())->isActivated('configmanager')) {
-		echo __("Plugin requires ConfigManager 1.x.x", 'smartredirect');
+		echo __("Plugin requires ConfigManager 1.x.x", 'tickettransfer');
 		return false;
 	}
 	$configmanager_version = Plugin::getInfo('configmanager', 'version');
 	if(version_compare($configmanager_version, '1.0.0', 'lt') || version_compare($configmanager_version, '2.0.0', 'ge')) {
-		echo __("Plugin requires ConfigManager 1.x.x", 'smartredirect');
+		echo __("Plugin requires ConfigManager 1.x.x", 'tickettransfer');
 		return false;
 	}
 	
