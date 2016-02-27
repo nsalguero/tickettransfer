@@ -23,8 +23,8 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			'is_private' => '0' 
 		);
 		
-		return $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) && (
-				 ($config['allow_transfer'] || $config['allow_group'])) ;
+		return $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) && 
+				($config['allow_transfer'] && !empty($config['allowed_entities']) || $config['allow_group']);
 	}
 
 	function getTabNameForItem(CommonGLPI $item, $withtemplate = 0) {
@@ -99,8 +99,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	/**
 	 * Affiche l'onglet de transfert du plugin
 	 *
-	 * @param Ticket $ticket
-	 *        	ticket pour lequel on affiche l'onglet
+	 * @param Ticket $ticket ticket pour lequel on affiche l'onglet
 	 */
 	static function showForm(Ticket $ticket) {
 		$form_values = self::getFormValues($ticket);
@@ -132,7 +131,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 						<td width="70%"><?php
 							Ticket::dropdownType('type', array(
 									'rand' => '_tickettransfer',
-									'value' => $form_values['type'] 
+									'value' => $form_values['type']
 								));
 						?></td>
 					</tr>

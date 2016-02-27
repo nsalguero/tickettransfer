@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
-"POT-Creation-Date: 2016-02-20 13:42+0100\n"
-"PO-Revision-Date: 2016-02-20 13:43+0100\n"
+"POT-Creation-Date: 2016-02-27 12:28+0100\n"
+"PO-Revision-Date: 2016-02-27 12:30+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
@@ -45,70 +45,74 @@ msgstr "%s a transféré un ticket"
 msgid "Successful transfer"
 msgstr "Transfert réussi"
 
-#: inc/config.class.php:13
+#: inc/config.class.php:14
+msgid "Configuration for TicketTransfer"
+msgstr "Configuration pour TicketTransfer"
+
+#: inc/config.class.php:20
 msgid "Allow requalification"
 msgstr "Autoriser la requalification"
 
-#: inc/config.class.php:24
+#: inc/config.class.php:31
 msgid "Allow escalation"
 msgstr "Autoriser l'escalade"
 
-#: inc/config.class.php:35
+#: inc/config.class.php:42
 msgid "Notification on requalification"
 msgstr "Notification lors d'une requalification"
 
-#: inc/config.class.php:37 inc/config.class.php:49
+#: inc/config.class.php:44 inc/config.class.php:56
 msgid "Always"
 msgstr "Toujours"
 
-#: inc/config.class.php:38
+#: inc/config.class.php:45
 msgid "Only when assign group changes"
 msgstr "Seulement si le groupe assigné change"
 
-#: inc/config.class.php:39 inc/config.class.php:51
+#: inc/config.class.php:46 inc/config.class.php:58
 msgid "Never"
 msgstr "Jamais"
 
-#: inc/config.class.php:47
+#: inc/config.class.php:54
 msgid "Notification on escalation"
 msgstr "Notification lors d'une escalade"
 
-#: inc/config.class.php:50
+#: inc/config.class.php:57
 msgid "Only when the user doing the transfer is not in destination group"
 msgstr ""
 "Seulement si l'utilisateur faisant l'excalade n'est pas dans le groupe de "
 "destination"
 
-#: inc/config.class.php:59
+#: inc/config.class.php:66
 msgid "Allowed entities"
 msgstr "Entités vers lesquelles le transfert est aurtorisé"
 
-#: inc/config.class.php:72
+#: inc/config.class.php:77
 msgid "Force transfer justification"
 msgstr "Forcer l'utilisateur à justifier les transferts"
 
-#: inc/config.class.php:83
+#: inc/config.class.php:88
 msgid "Transfer justification prefix"
 msgstr "Préfixe pour la justification des transferts"
 
-#: inc/config.class.php:86
+#: inc/config.class.php:89
 msgid "Transfer justification"
 msgstr "Justification du transfert"
 
-#: inc/config.class.php:94
+#: inc/config.class.php:99
 msgid "Keep current status"
 msgstr "Conserver la situation actuelle"
 
-#: inc/config.class.php:95
+#: inc/config.class.php:100
 msgid "Yes, but only if I'm not already in an observer group"
 msgstr ""
 "Oui, mais seulement si je ne fais pas déjà partie d'un groupe d'observateurs"
 
-#: inc/config.class.php:105
+#: inc/config.class.php:110
 msgid "Keep current group"
 msgstr "Conserver le groupe actuel"
 
-#: inc/config.class.php:106 inc/tickettab.class.php:266
+#: inc/config.class.php:111 inc/tickettab.class.php:265
 msgid "Automatic transfer"
 msgstr "Transfert automatique"
 
@@ -122,21 +126,21 @@ msgstr "Escalade d'un ticket"
 
 #: inc/tickettab.class.php:32
 msgid "Ticket transfer"
-msgstr "Ticket transfer"
+msgstr "Tranfert"
 
-#: inc/tickettab.class.php:148
+#: inc/tickettab.class.php:147
 msgid "Transfer mode"
 msgstr "Mode de transfert"
 
-#: inc/tickettab.class.php:170
+#: inc/tickettab.class.php:169
 msgid "Keep me observer"
 msgstr "Rester observateur"
 
-#: inc/tickettab.class.php:170
+#: inc/tickettab.class.php:169
 msgid "Add me as observer"
 msgstr "M'ajouter en observateur"
 
-#: inc/tickettab.class.php:176
+#: inc/tickettab.class.php:175
 msgid ""
 "This option only sets if you are personnaly observer, but it will not change "
 "observer groups. This means you will stay observer no matter what"
@@ -145,27 +149,27 @@ msgstr ""
 "mais ne change pas les groupes d'observateur. Cela signifie que vous "
 "resterez de toute façon observateur après le transfert."
 
-#: inc/tickettab.class.php:176
+#: inc/tickettab.class.php:175
 msgid "You are in an observer group"
 msgstr "Vous faites partie d'un groupe d'observateurs"
 
-#: inc/tickettab.class.php:185
+#: inc/tickettab.class.php:184
 msgid "Transfer explanation / justification"
 msgstr "Explication / justification du transfert"
 
-#: inc/tickettab.class.php:212
+#: inc/tickettab.class.php:211
 msgid "Transfer somewhere else"
 msgstr "Requalifier le ticket"
 
-#: inc/tickettab.class.php:213
+#: inc/tickettab.class.php:212
 msgid "Transfer to an other group"
 msgstr "Escalader le ticket"
 
-#: inc/tickettab.class.php:265
+#: inc/tickettab.class.php:264
 msgid "Keep attribution"
 msgstr "Conserver l'attribution actuelle"
 
-#: inc/tickettab.class.php:270
+#: inc/tickettab.class.php:269
 msgid "This category does not allow automatic transfer"
 msgstr "Cette catégorie ne permet pas le transfert automatique du ticket"
 
@@ -173,6 +177,6 @@ msgstr "Cette catégorie ne permet pas le transfert automatique du ticket"
 msgid "Plugin has been tested only for GLPI 0.84.8"
 msgstr "Ce plugin n'a été testé que pour GLPI 0.84.8"
 
-#: setup.php:30
-msgid "Plugin requires ConfigManager 1.0"
-msgstr "Ce plugin requiert ConfigManager 1.0"
+#: setup.php:30 setup.php:35
+msgid "Plugin requires ConfigManager 1.x.x"
+msgstr "Ce plugin requiert ConfigManager 1.x.x"

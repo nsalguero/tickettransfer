@@ -7,11 +7,11 @@
 function plugin_version_tickettransfer() {
 	return array(
 		'name' => "Ticket transfer",
-		'version' => '0.0.1',
+		'version' => '1.0.0',
 		'author' => 'Etiennef',
 		'license' => 'GPLv2+',
 		'homepage' => 'https://github.com/Etiennef/tickettransfer',
-		'minGlpiVersion' => '0.84' 
+		'minGlpiVersion' => '0.84.8' 
 	);
 }
 
@@ -27,7 +27,12 @@ function plugin_tickettransfer_check_prerequisites() {
 	
 	//Vérifie la présence de ConfigManager
 	if(!(new Plugin())->isActivated('configmanager')) {
-		echo __("Plugin requires ConfigManager 1.0", 'tickettransfer');
+		echo __("Plugin requires ConfigManager 1.x.x", 'smartredirect');
+		return false;
+	}
+	$configmanager_version = Plugin::getInfo('configmanager', 'version');
+	if(version_compare($configmanager_version, '1.0.0', 'lt') || version_compare($configmanager_version, '2.0.0', 'ge')) {
+		echo __("Plugin requires ConfigManager 1.x.x", 'smartredirect');
 		return false;
 	}
 	
