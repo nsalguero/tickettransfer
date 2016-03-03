@@ -103,6 +103,8 @@ class PluginTickettransferTickettab extends CommonDBTM {
     *           ticket pour lequel on affiche l'onglet
     */
    static function showForm(Ticket $ticket) {
+      global $CFG_GLPI;
+
       $form_values = self::getFormValues($ticket);
 
       ?>
@@ -119,11 +121,16 @@ class PluginTickettransferTickettab extends CommonDBTM {
                <tr class="tab_bg_1 tickettransferentity">
                   <td width="30%"><?php echo __('Destination entity'); ?></td>
                   <td width="70%"><?php
-      PluginTickettransferEntitiesdropdown::entitiesDropdown($form_values['allowed_entities'], array(
-            'value' => $form_values['entities_id'],
-            'name' => 'entities_id',
-            'rand' => '_tickettransfer'
-      ));
+                  /*$myEntities = Dropdown::getDropdownArrayNames(Entity::getTable(), $form_values['allowed_entities']);
+                  asort($myEntities);
+                  Dropdown::showFromArray('entities_id2', $myEntities);*/
+
+                    PluginTickettransferEntitiesdropdown::entitiesDropdown($form_values['allowed_entities'], array(
+                           'value' => $form_values['entities_id'],
+                           'name' => 'entities_id',
+                           'rand' => '_tickettransfer'
+                     ));
+                    echo Html::jsAdaptDropdown('dropdown_entities_id_tickettransfer');
       ?></td>
                </tr>
 
@@ -139,18 +146,16 @@ class PluginTickettransferTickettab extends CommonDBTM {
 
                <tr class="tab_bg_1 tickettransferentity">
                   <td width="30%"><?php echo __('Category'); ?></td>
-                  <td width="70%"><span
-                     id='selectZone_itilcategories_id_tickettransfer'>
-							<?php self::categoriesDropdown($form_values); ?>
-						</span></td>
+                  <td id='selectZone_itilcategories_id_tickettransfer' width="70%">
+                     <?php self::categoriesDropdown($form_values); ?>
+                  </td>
                </tr>
 
                <tr class="tab_bg_2 tickettransferentity">
                   <td width="30%"><?php echo __('Transfer mode', 'tickettransfer'); ?></td>
-                  <td width="70%"><span
-                     id="selectZone_transfer_options_tickettransfer">
-							<?php self::showTransferOptions($form_values); ?>
-						</span></td>
+                  <td id="selectZone_transfer_options_tickettransfer" width="70%">
+                     <?php self::showTransferOptions($form_values); ?>
+                  </td>
                </tr>
 
                <tr class="tab_bg_2 tickettransfergroup">
@@ -198,7 +203,67 @@ class PluginTickettransferTickettab extends CommonDBTM {
    </table>
 		<?php
       Html::closeForm();
-      include GLPI_ROOT . "/plugins/tickettransfer/scripts/tickettab.js.php";
+
+      $transfertypeId = 'dropdown_transfer_type_tickettransfer';
+      $entitiesId = 'dropdown_entities_id_tickettransfer';
+      $typeId = 'dropdown_type_tickettransfer';
+      $categoriesId = 'dropdown_itilcategories_id_tickettransfer';
+      $zone_itilcategories_id = 'selectZone_itilcategories_id_tickettransfer';
+      $zone_transfermode = 'selectZone_transfer_options_tickettransfer';
+
+      echo <<<JS
+      <script type='text/javascript'>
+      $(function() {
+         var ajaxUrl = '$CFG_GLPI[root_doc]/plugins/tickettransfer/ajax/transferOptions.php';
+
+         $('#$transfertypeId').on('change', refreshTransferZone);
+         $('#$entitiesId').on('change', refreshCategories);
+         $('#$typeId').on('change', refreshCategories);
+         $('#$categoriesId').on('change', refreshTransferOptions);
+
+         refreshTransferZone();
+
+         function refreshTransferZone() {
+            var type = $('#$transfertypeId').val();
+            var ntype = type === 'entity' ? 'group' : 'entity';
+            $('.tickettransfer'+ntype).hide(0);
+            $('.tickettransfer'+type).show(0);
+         }
+
+         function refreshCategories() {
+            var currentcategory = $('#$categoriesId').val();
+            $('td#$zone_itilcategories_id').load(
+                  ajaxUrl,
+                  {
+                     'request': 'itilcategories',
+                     'entities_id': $('#$entitiesId').val(),
+                     'type': $('#$typeId').val(),
+                     'itilcategories_id': currentcategory,
+                  },
+                  function() {
+                     if(currentcategory !== $('#$categoriesId').val()) {
+                        refreshTransferOptions();
+                     }
+                     $('#$categoriesId').on('change', refreshTransferOptions);
+                  }
+               );
+         }
+
+         function refreshTransferOptions() {
+            $('td#$zone_transfermode').load(
+                  ajaxUrl,
+                  {
+                     'request': 'transfer_options',
+                     'itilcategories_id': $('#$categoriesId').val(),
+                  }
+               );
+         }
+
+      });
+      </script>
+JS;
+
+      //include GLPI_ROOT . "/plugins/tickettransfer/scripts/tickettab.js.php";
    }
 
    /**
@@ -234,19 +299,23 @@ class PluginTickettransferTickettab extends CommonDBTM {
     *           sélectionné - itilcategories_id id de la catégorie à sélectionner par défaut, ou ''
     */
    static function categoriesDropdown($input) {
-      $condition = "`" . ($input['type'] == Ticket::INCIDENT_TYPE ? 'is_incident' : 'is_request') . "`='1'";
-      if ($_SESSION["glpiactiveprofile"]["interface"] == "helpdesk") {
-         $condition .= " AND `is_helpdeskvisible`='1'";
-      }
-
-      ITILCategory::dropdown(array(
+      $opt = array(
             'name' => 'itilcategories_id',
             'rand' => '_tickettransfer',
             'entity' => $input['entities_id'],
             'display_emptychoice' => false,
-            'value' => isset($input['itilcategories_id']) ? $input['itilcategories_id'] : '',
-            'condition' => $condition
-      ));
+      );
+
+      $opt['condition'] = $input['type'] == Ticket::INCIDENT_TYPE ? "`is_incident`='1'" : "`is_request`='1'";
+      if ($_SESSION["glpiactiveprofile"]["interface"] == "helpdesk") {
+         $opt['condition'] .= " AND `is_helpdeskvisible`='1'";
+      }
+
+      if(self::isCategoryValid($input)) {
+         $opt['value'] = $input['itilcategories_id'];
+      }
+
+      ITILCategory::dropdown($opt);
    }
 
    /**
@@ -278,6 +347,27 @@ class PluginTickettransferTickettab extends CommonDBTM {
 					'value' => $config['default_transfer_mode']
 				));
 		}
+	}
+
+
+	static function isCategoryValid($input) {
+      $itilCategory = new ItilCategory();
+
+      if(!$itilCategory->getFromDB($input['itilcategories_id']))
+         return false;
+
+      if($itilCategory->getEntityID() != $input['entities_id'] &&
+            !(in_array($input['entities_id'], getSonsOf("glpi_entities", $itilCategory->getEntityID())) && $itilCategory->isRecursive())) {
+         return false;
+      }
+
+      if($input['type'] == Ticket::INCIDENT_TYPE && $itilCategory->getField('is_incident') != 1)
+         return false;
+
+      if($input['type'] == Ticket::DEMAND_TYPE && $itilCategory->getField('is_request') != 1)
+         return false;
+
+      return true;
 	}
 }
 
