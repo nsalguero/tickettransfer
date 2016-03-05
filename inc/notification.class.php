@@ -10,7 +10,7 @@ class PluginTickettransferNotification {
     * @param NotificationTargetTicket $target
     */
    static function addEvents(NotificationTargetTicket $target) {
-      $target->events['plugin_tickettransfer_transfer'] = __('Ticket requalification', 'tickettransfer');
+      $target->events['plugin_tickettransfer_requalification'] = __('Ticket requalification', 'tickettransfer');
       $target->events['plugin_tickettransfer_escalation'] = __('Ticket escalation', 'tickettransfer');
    }
 
@@ -20,8 +20,12 @@ class PluginTickettransferNotification {
     * @param NotificationTargetTicket $target
     */
    static function getDatas(NotificationTargetTicket $target) {
-      if ($target->raiseevent === 'plugin_tickettransfer_transfer' || $target->raiseevent === 'plugin_tickettransfer_escalation') {
-         $target->datas['##ticket.tickettransfer.author##'] = $target->obj->__tickettransfer['author'];
+      if ($target->raiseevent === 'plugin_tickettransfer_requalification' || $target->raiseevent === 'plugin_tickettransfer_escalation') {
+         $author = new User();
+         if($author->getFromDB($target->obj->__tickettransfer['author'])) {
+            $target->datas['##ticket.tickettransfer.author##'] = $author->getName();
+         }
+
          $target->datas['##ticket.tickettransfer.message##'] = $target->obj->__tickettransfer['message'];
          $target->datas['##ticket.tickettransfer.groupchanged##'] = $target->obj->__tickettransfer['groupchanged'];
       }

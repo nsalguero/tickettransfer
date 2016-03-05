@@ -18,7 +18,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
                   ),
                   'text' => self::makeHeaderLine(__('Configuration for TicketTransfer', 'tickettransfer'))
             ),
-            'allow_transfer' => array(
+            'allow_requalification' => array(
                   'type' => 'dropdown',
                   'types' => array(
                         self::TYPE_PROFILE,
@@ -32,7 +32,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
                   ),
                   'default' => '0'
             ),
-            'allow_group' => array(
+            'allow_escalation' => array(
                   'type' => 'dropdown',
                   'types' => array(
                         self::TYPE_PROFILE,
@@ -46,7 +46,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
                   ),
                   'default' => '0'
             ),
-            'notif_transfer' => array(
+            'notif_requalification' => array(
                   'type' => 'dropdown',
                   'types' => array(
                         self::TYPE_GLOBAL
@@ -60,7 +60,7 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
                   ),
                   'default' => 'never'
             ),
-            'notif_group' => array(
+            'notif_escalation' => array(
                   'type' => 'dropdown',
                   'types' => array(
                         self::TYPE_GLOBAL
@@ -147,6 +147,24 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 
       asort($tmp['allowed_entities']['values']);
       return $tmp;
+   }
+
+   static function getConfigValues($values=array()) {
+      $config = parent::getConfigValues($values);
+
+      /*
+       * for when config will be glpiactiveentities + add - remove
+       $addEntities = array(0, 3);
+       $removeEntities = array(5);
+       $allowed_entities = array_diff(array_unique(array_merge($addEntities, $_SESSION['glpiactiveentities'])), $removeEntities);*/
+
+      $allowed_entities = array();
+      foreach ($config['allowed_entities'] as $value) {
+         $allowed_entities[] = intval($value);
+      }
+      $config['allowed_entities'] = $allowed_entities;
+
+      return $config;
    }
 }
 ?>
