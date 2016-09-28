@@ -2,14 +2,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
 "POT-Creation-Date: 2016-02-27 16:00+0100\n"
-"PO-Revision-Date: 2016-02-27 16:01+0100\n"
+"PO-Revision-Date: 2016-09-28 21:55+0200\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Basepath: ../.\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -134,7 +134,7 @@ msgstr "Escalade d'un ticket"
 
 #: inc/tickettab.class.php:32
 msgid "Ticket transfer"
-msgstr "Tranfert"
+msgstr "Transfert"
 
 #: inc/tickettab.class.php:147
 msgid "Transfer mode"
@@ -167,7 +167,7 @@ msgstr "Explication / justification du transfert"
 
 #: inc/tickettab.class.php:211
 msgid "Transfer somewhere else"
-msgstr "Requalifier le ticket"
+msgstr "Recatégoriser le ticket"
 
 #: inc/tickettab.class.php:212
 msgid "Transfer to an other group"

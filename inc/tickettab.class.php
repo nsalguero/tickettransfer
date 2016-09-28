@@ -14,16 +14,16 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	 */
 	static function canTansfer(Ticket $ticket) {
 		$config = PluginTickettransferConfig::getConfigValues();
-		
+
 		$fup = new TicketFollowup();
 		$fuptestinput = array(
 			'content' => 'test',
 			'tickets_id' => $ticket->getID(),
 			'requesttypes_id' => '1',
-			'is_private' => '0' 
+			'is_private' => '0'
 		);
-		
-		return $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) && 
+
+		return $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) &&
 				($config['allow_transfer'] && !empty($config['allowed_entities']) || $config['allow_group']);
 	}
 
@@ -44,12 +44,12 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	/**
 	 * Calcule les valeurs à afficher par défaut dans l'onglet de transfert
 	 *
-	 * @param Ticket $ticket        	
+	 * @param Ticket $ticket
 	 * @return array tableau de valeurs par défaut
 	 */
 	static function getFormValues($ticket) {
 		$config = PluginTickettransferConfig::getConfigValues();
-		
+
 		// Calcul des valeurs par défaut
 		$form_values = array(
 			'transfer_type' => $config['allow_transfer'] ? self::TRANSFER_TYPE_ENTITY : self::TRANSFER_TYPE_GROUP,
@@ -62,14 +62,14 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			'transfer_justification' => '',
 			'allowed_entities' => $config['allowed_entities']
 		);
-		
+
 		// défini un groupe au hasard parmis ceux auxquels le ticket est affecté
 		$groups = $ticket->getGroups(CommonITILActor::ASSIGN);
 		if(count($groups) >= 1) {
 			reset($groups);
 			$form_values['groups_id_assign'] = current($groups)['groups_id'];
 		}
-		
+
 		switch($config['default_observer_option']) {
 			case 'nochange' :
 				$form_values['observer_option'] = $form_values['is_user_observer'];
@@ -84,7 +84,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 				$form_values['observer_option'] = false;
 				break;
 		}
-		
+
 		// Ecrase les valeurs par défaut là où on a une valeur sauvegardée
 		if(isset($_SESSION['plugin']['tickettransfer']['savedPOST'])) {
 			foreach($_SESSION['plugin']['tickettransfer']['savedPOST'] as $key => $val) {
@@ -92,7 +92,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			}
 			unset($_SESSION['plugin']['tickettransfer']['savedPOST']);
 		}
-		
+
 		return $form_values;
 	}
 
@@ -103,7 +103,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	 */
 	static function showForm(Ticket $ticket) {
 		$form_values = self::getFormValues($ticket);
-		
+
 		?>
 
 <form action="<?php echo self::getFormURL();?>" method="post">
@@ -159,7 +159,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 										'entity' => $form_values['current_entities_id'],
 										'display_emptychoice' => false,
 										'value' => $form_values['groups_id_assign'],
-										'condition' => '`is_assign`' 
+										'condition' => '`is_assign`'
 									));
 						?></td>
 					</tr>
@@ -169,7 +169,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 							<?php echo $form_values['is_user_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
 						</td>
 						<td width="70%"><input type="checkbox" name="observer_option"
-							<?php 
+							<?php
 								echo $form_values['observer_option'] ? ' checked>' : '>';
 								if($form_values['is_group_observer']) {
 									echo ' <span title="'.__('This option only sets if you are personnaly observer, but it will not change observer groups. This means you will stay observer no matter what', 'tickettransfer').'">('.__('You are in an observer group', 'tickettransfer').')</span>';
@@ -204,21 +204,21 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	static function tranfertypeDropdown($form_values) {
 		$config = PluginTickettransferConfig::getConfigValues();
 		$value = $form_values['transfer_type'];
-		
+
 		$has2options = $config['allow_transfer'] && $config['allow_group'];
-		
+
 		$transfer_type_options = array(
 			self::TRANSFER_TYPE_ENTITY => __('Transfer somewhere else', 'tickettransfer'),
-			self::TRANSFER_TYPE_GROUP => __('Transfer to an other group', 'tickettransfer') 
+			self::TRANSFER_TYPE_GROUP => __('Transfer to an other group', 'tickettransfer')
 		);
-		
+
 		if(! $has2options) {
 			echo $transfer_type_options[$value];
 			echo '<input id="dropdown_transfer_type_tickettransfer" name="transfer_type" type="hidden" value="' . $value . '">';
 		} else {
 			Dropdown::showFromArray("transfer_type", $transfer_type_options, array(
 					'rand' => '_tickettransfer',
-					'value' => $value 
+					'value' => $value
 				));
 		}
 	}
@@ -235,14 +235,14 @@ class PluginTickettransferTickettab extends CommonDBTM {
 		if($_SESSION["glpiactiveprofile"]["interface"] == "helpdesk") {
 			$condition .= " AND `is_helpdeskvisible`='1'";
 		}
-		
+
 		ITILCategory::dropdown(	array(
 				'name' => 'itilcategories_id',
 				'rand' => '_tickettransfer',
 				'entity' => $input['entities_id'],
 				'display_emptychoice' => false,
 				'value' => isset($input['itilcategories_id']) ? $input['itilcategories_id'] : '',
-				'condition' => $condition 
+				'condition' => $condition
 			));
 	}
 
@@ -255,16 +255,16 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	 */
 	static function showTransferOptions($input) {
 		$config = PluginTickettransferConfig::getConfigValues();
-		
+
 		$category = new ITILCategory();
 		$category->getFromDB($input['itilcategories_id']);
 		$hasgroup = ! empty($category->fields['groups_id']);
-		
+
 		$transfer_mode_options = array(
 			self::TRANSFER_MODE_KEEP => __('Keep attribution', 'tickettransfer'),
-			self::TRANSFER_MODE_AUTO => __('Automatic transfer', 'tickettransfer') 
+			self::TRANSFER_MODE_AUTO => __('Automatic transfer', 'tickettransfer')
 		);
-		
+
 		if(! $hasgroup) {
 			echo '<span title="' . __('This category does not allow automatic transfer', 'tickettransfer') . '">';
 			echo $transfer_mode_options[self::TRANSFER_MODE_KEEP];
@@ -272,7 +272,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			echo '<input name="transfer_option" type="hidden" value="' . self::TRANSFER_MODE_KEEP . '">';
 		} else {
 			Dropdown::showFromArray("transfer_option", $transfer_mode_options, array(
-					'value' => $config['default_transfer_mode'] 
+					'value' => $config['default_transfer_mode']
 				));
 		}
 	}
