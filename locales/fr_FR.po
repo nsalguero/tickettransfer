@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Ticket transfer\n"
-"POT-Creation-Date: 2016-02-27 16:00+0100\n"
-"PO-Revision-Date: 2016-09-28 21:55+0200\n"
+"POT-Creation-Date: 2017-02-04 10:58+0100\n"
+"PO-Revision-Date: 2017-02-04 10:58+0100\n"
 "Last-Translator: Etienne <etienne-github@outlook.fr>\n"
 "Language-Team: Etienne <Etienne-github@outlook.fr>\n"
 "Language: fr_FR\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.9\n"
+"X-Generator: Poedit 1.8.11\n"
 "X-Poedit-Basepath: ../.\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -51,7 +51,7 @@ msgstr "Configuration pour TicketTransfer"
 
 #: inc/config.class.php:20
 msgid "Allow requalification"
-msgstr "Autoriser la requalification"
+msgstr "Autoriser la recatégorisation"
 
 #: inc/config.class.php:31
 msgid "Allow escalation"
@@ -59,7 +59,7 @@ msgstr "Autoriser l'escalade"
 
 #: inc/config.class.php:42
 msgid "Notification on requalification"
-msgstr "Notification lors d'une requalification"
+msgstr "Notification lors d'une recatégorisation"
 
 #: inc/config.class.php:44 inc/config.class.php:56
 msgid "Always"
@@ -120,13 +120,13 @@ msgstr "Mode de transfert préféré"
 msgid "Keep current group"
 msgstr "Conserver le groupe actuel"
 
-#: inc/config.class.php:111 inc/tickettab.class.php:265
+#: inc/config.class.php:111 inc/tickettab.class.php:266
 msgid "Automatic transfer"
 msgstr "Transfert automatique"
 
 #: inc/notification.class.php:12
 msgid "Ticket requalification"
-msgstr "Requalification d'un ticket"
+msgstr "Recatégoriser d'un ticket"
 
 #: inc/notification.class.php:13
 msgid "Ticket escalation"
@@ -140,6 +140,10 @@ msgstr "Transfert"
 msgid "Transfer mode"
 msgstr "Mode de transfert"
 
+#: inc/tickettab.class.php:154
+msgid "Destination group"
+msgstr "Groupe de destination"
+
 #: inc/tickettab.class.php:169
 msgid "Keep me observer"
 msgstr "Rester observateur"
@@ -148,7 +152,7 @@ msgstr "Rester observateur"
 msgid "Add me as observer"
 msgstr "M'ajouter en observateur"
 
-#: inc/tickettab.class.php:175
+#: inc/tickettab.class.php:176
 msgid ""
 "This option only sets if you are personnaly observer, but it will not change "
 "observer groups. This means you will stay observer no matter what"
@@ -157,27 +161,27 @@ msgstr ""
 "mais ne change pas les groupes d'observateur. Cela signifie que vous "
 "resterez de toute façon observateur après le transfert."
 
-#: inc/tickettab.class.php:175
+#: inc/tickettab.class.php:176
 msgid "You are in an observer group"
 msgstr "Vous faites partie d'un groupe d'observateurs"
 
-#: inc/tickettab.class.php:184
+#: inc/tickettab.class.php:185
 msgid "Transfer explanation / justification"
 msgstr "Explication / justification du transfert"
 
-#: inc/tickettab.class.php:211
+#: inc/tickettab.class.php:212
 msgid "Transfer somewhere else"
 msgstr "Recatégoriser le ticket"
 
-#: inc/tickettab.class.php:212
+#: inc/tickettab.class.php:213
 msgid "Transfer to an other group"
 msgstr "Escalader le ticket"
 
-#: inc/tickettab.class.php:264
+#: inc/tickettab.class.php:265
 msgid "Keep attribution"
 msgstr "Conserver l'attribution actuelle"
 
-#: inc/tickettab.class.php:269
+#: inc/tickettab.class.php:270
 msgid "This category does not allow automatic transfer"
 msgstr "Cette catégorie ne permet pas le transfert automatique du ticket"
 

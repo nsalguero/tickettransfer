@@ -23,7 +23,8 @@ class PluginTickettransferTickettab extends CommonDBTM {
 			'is_private' => '0'
 		);
 
-		return $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) &&
+		return $_SESSION['glpiactiveprofile']['interface'] !== 'helpdesk' &&
+		        $ticket->can($ticket->getID(), 'w') && $fup->can(- 1, 'w', $fuptestinput) &&
 				($config['allow_transfer'] && !empty($config['allowed_entities']) || $config['allow_group']);
 	}
 
@@ -47,7 +48,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 	 * @param Ticket $ticket
 	 * @return array tableau de valeurs par défaut
 	 */
-	static function getFormValues($ticket) {
+	static function getFormValues(Ticket $ticket) {
 		$config = PluginTickettransferConfig::getConfigValues();
 
 		// Calcul des valeurs par défaut
@@ -151,7 +152,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 					</tr>
 
 					<tr class="tab_bg_2 tickettransfergroup">
-						<td width="30%"><?php echo __('Destination group'); ?></td>
+						<td width="30%"><?php echo __('Destination group', 'tickettransfer'); ?></td>
 						<td width="70%"><?php
 							Group::dropdown(array(
 										'name' => 'groups_id_assign',
@@ -164,24 +165,25 @@ class PluginTickettransferTickettab extends CommonDBTM {
 						?></td>
 					</tr>
 
-					<tr class="tab_bg_1">
-						<td width="30%">
-							<?php echo $form_values['is_user_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
-						</td>
-						<td width="70%"><input type="checkbox" name="observer_option"
-							<?php
-								echo $form_values['observer_option'] ? ' checked>' : '>';
-								if($form_values['is_group_observer']) {
-									echo ' <span title="'.__('This option only sets if you are personnaly observer, but it will not change observer groups. This means you will stay observer no matter what', 'tickettransfer').'">('.__('You are in an observer group', 'tickettransfer').')</span>';
-								}
-							?>
-						</td>
-					</tr>
+                    <tr class="tab_bg_1">
+                        <td width="30%">
+                            <?php echo $form_values['is_user_observer'] ? __('Keep me observer', 'tickettransfer'):__('Add me as observer', 'tickettransfer'); ?>
+                        </td>
+                        <td width="70%">
+                            <?php
+                                $checked = $form_values['observer_option'] ? ' checked' : '';
+                                echo "<input type=\"checkbox\" name=\"observer_option\" $checked/>";
+                                if($form_values['is_group_observer']) {
+                                    echo ' <span title="'.__('This option only sets if you are personnaly observer, but it will not change observer groups. This means you will stay observer no matter what', 'tickettransfer').'">('.__('You are in an observer group', 'tickettransfer').')</span>';
+                                }
+                            ?>
+                        </td>
+                    </tr>
 				</table>
 			</td>
 
 			<td>
-				<?php echo __('Transfer explanation / justification', 'tickettransfer'); ?> :</br>
+				<?php echo __('Transfer explanation / justification', 'tickettransfer'); ?> :<br/>
 				<textarea name="transfer_justification" cols="60" rows="6"><?php echo $form_values['transfer_justification']; ?></textarea>
 			</td>
 		</tr>

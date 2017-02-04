@@ -7,11 +7,11 @@
 function plugin_version_tickettransfer() {
 	return array(
 		'name' => "Ticket transfer",
-		'version' => '1.0.0',
+		'version' => '0.84.8 + 1.1.0',
 		'author' => 'Etiennef',
 		'license' => 'GPLv2+',
 		'homepage' => 'https://github.com/Etiennef/tickettransfer',
-		'minGlpiVersion' => '0.84.8' 
+		'minGlpiVersion' => '0.84.8'
 	);
 }
 
@@ -24,7 +24,7 @@ function plugin_tickettransfer_check_prerequisites() {
 		echo __("Plugin has been tested only for GLPI 0.84.8", 'tickettransfer');
 		return false;
 	}
-	
+
 	//Vérifie la présence de ConfigManager
 	if(!(new Plugin())->isActivated('configmanager')) {
 		echo __("Plugin requires ConfigManager 1.x.x", 'tickettransfer');
@@ -35,7 +35,7 @@ function plugin_tickettransfer_check_prerequisites() {
 		echo __("Plugin requires ConfigManager 1.x.x", 'tickettransfer');
 		return false;
 	}
-	
+
 	return true;
 }
 
@@ -54,31 +54,35 @@ function plugin_tickettransfer_check_config($verbose = false) {
  */
 function plugin_init_tickettransfer() {
 	global $PLUGIN_HOOKS;
-	
+
 	$PLUGIN_HOOKS['csrf_compliant']['tickettransfer'] = true;
-	
+
 	Plugin::registerClass('PluginTickettransferConfig', array('addtabon' => array(
 			'User',
 			'Preference',
 			'Config',
-			'Profile' 
+			'Profile'
 		)));
-	
+
 	if((new Plugin())->isActivated('tickettransfer')) {
 		$PLUGIN_HOOKS['config_page']['tickettransfer'] = "../../front/config.form.php?forcetab=" . urlencode('PluginTickettransferConfig$1');
 	}
-	
+
 	// Onglet transfert pour les tickets
 	Plugin::registerClass('PluginTickettransferTickettab', array(
-		'addtabon' => array('Ticket') 
+		'addtabon' => array('Ticket')
 	));
-	
+
+	// Réécriture des liens escalade
+	if((new Plugin())->isActivated('escalade')) {
+	    $PLUGIN_HOOKS['add_javascript']['tickettransfer'] = 'scripts/escalade.js';
+	}
 	// Notifications
 	$PLUGIN_HOOKS['item_get_events']['tickettransfer'] = array(
-		'NotificationTargetTicket' => array('PluginTickettransferNotification', 'addEvents') 
+		'NotificationTargetTicket' => array('PluginTickettransferNotification', 'addEvents')
 	);
 	$PLUGIN_HOOKS['item_get_datas']['tickettransfer'] = array(
-		'NotificationTargetTicket' => array('PluginTickettransferNotification', 'getDatas') 
+		'NotificationTargetTicket' => array('PluginTickettransferNotification', 'getDatas')
 	);
 }
 
