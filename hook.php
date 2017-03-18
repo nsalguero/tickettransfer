@@ -5,10 +5,10 @@
  * @return boolean
  */
 function plugin_tickettransfer_install() {
-	include 'inc/config.class.php';
-	PluginTickettransferConfig::install();
-	
-	return true;
+   include 'inc/config.class.php';
+   PluginTickettransferConfig::install();
+   
+   return true;
 }
 
 /**
@@ -16,27 +16,8 @@ function plugin_tickettransfer_install() {
  * @return boolean
  */
 function plugin_tickettransfer_uninstall() {
-	include 'inc/config.class.php';
-	PluginTickettransferConfig::uninstall();
-	
-	return true;
+   include 'inc/config.class.php';
+   PluginTickettransferConfig::uninstall();
+   
+   return true;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
