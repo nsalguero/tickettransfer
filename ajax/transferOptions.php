@@ -14,12 +14,12 @@ Session::checkLoginUser();
 if(isset($_POST['request'])) {
    switch ($_POST['request']) {
       case 'itilcategories' :
-         if(!isset($_POST['entities_id']) || !isset($_POST['type'])) return;
-         PluginTickettransferTickettab::categoriesDropdown($_POST);
+         if(!isset($_POST['entities_id']) || !isset($_POST['type']) || !isset($_POST['itilcategories_id'])) return;
+         echo PluginTickettransferTickettab::makeCategoriesDropdown($_POST);
          return;
-      case 'transfer_options' :
+      case 'transfermode' :
          if(!isset($_POST['itilcategories_id'])) return;
-         PluginTickettransferTickettab::showTransferOptions($_POST);
+         echo PluginTickettransferTickettab::makeTransfermodeDropdown($_POST);
          return;
    }
 }
