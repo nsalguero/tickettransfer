@@ -271,6 +271,6 @@ if ($ticket->can($ticket_id, READ)) {
    Html::redirect($CFG_GLPI["root_doc"]."/front/ticket.form.php?id=$ticket_id");
 } else {
    Session::addMessageAfterRedirect(__('You have been redirected because you no longer have access to this ticket'),
-         true, ERROR);
+         true, INFO);
    $ticket->redirectToList();
 }
