@@ -126,7 +126,7 @@ msgstr "Transfert automatique"
 
 #: inc/notification.class.php:12
 msgid "Ticket requalification"
-msgstr "Recatégoriser d'un ticket"
+msgstr "Recatégorisation d'un ticket"
 
 #: inc/notification.class.php:13
 msgid "Ticket escalation"
@@ -171,11 +171,11 @@ msgstr "Explication / justification du transfert"
 
 #: inc/tickettab.class.php:212
 msgid "Transfer somewhere else"
-msgstr "Recatégoriser le ticket"
+msgstr "Transférer vers une autre entité"
 
 #: inc/tickettab.class.php:213
 msgid "Transfer to an other group"
-msgstr "Escalader le ticket"
+msgstr "Transférer vers un autre groupe"
 
 #: inc/tickettab.class.php:265
 msgid "Keep attribution"
