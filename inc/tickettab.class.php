@@ -165,6 +165,11 @@ class PluginTickettransferTickettab extends CommonDBTM {
             'transfer' => Html::cleanInputText(__('Transfer'))
          );
 
+      $config = PluginTickettransferConfig::getConfigValues();
+      if ($config['force_justification']) {
+         $translations[transfer_justification] .= '<span class="required">*</span>';
+      }
+
       echo <<<HTML
       <form action="$action_url" method="post">
          <table class="tab_cadre_fixe">
