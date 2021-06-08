@@ -167,7 +167,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
 
       $config = PluginTickettransferConfig::getConfigValues();
       if ($config['force_justification']) {
-         $translations[transfer_justification] .= '<span class="required">*</span>';
+         $translations[transfer_justification] .= '<span class="required"><strong>*</strong></span>';
       }
 
       echo <<<HTML
@@ -206,7 +206,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
                   </table>
                </td>
                <td>
-                  $translations[transfer_justification] :</br>
+                  $translations[transfer_justification]</br>
                   <textarea name="transfer_justification" cols="60" rows="6">$form_values[transfer_justification]</textarea>
                </td>
             </tr>
