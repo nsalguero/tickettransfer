@@ -136,11 +136,6 @@ $ticket_id = $_POST['id'];
 $ticket_user = new Ticket_User();
 $ticket_group = new Group_Ticket();
 
-$ticket_inputs = array();
-$ticket_user_delete = array();
-$ticket_group_delete = array();
-
-
 // Requalification
 if($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUALIFICATION) {
    $ticket->update(array(
@@ -186,7 +181,7 @@ if(isset($_POST['groups_id_assign'])) {
             'tickets_id' => $ticket_id
       ));
 
-      // remove all assign user not in dest group
+      // remove all assigned users not in dest group
       $currentAssignUsers = $ticket->getUsers(CommonITILActor::ASSIGN);
       foreach($currentAssignUsers as $tu) {
          if(!in_array($tu['users_id'], $dest_group_users)) {
@@ -195,6 +190,21 @@ if(isset($_POST['groups_id_assign'])) {
             ));
          }
       }
+   }
+} else {
+   // Remove all existing groups
+   foreach ( $ticket->getGroups(CommonITILActor::ASSIGN) as $group_ticket ) {
+      $ticket_group->delete(array(
+            'id' => $group_ticket['id']
+      ));
+   }
+
+   // remove all assigned users
+   $currentAssignUsers = $ticket->getUsers(CommonITILActor::ASSIGN);
+   foreach($currentAssignUsers as $tu) {
+      $ticket_user->delete(array(
+            'id' => $tu['id']
+      ));
    }
 }
 
@@ -221,7 +231,7 @@ if(!$_POST['observer_option'] && $ticket->isUser(CommonITILActor::OBSERVER, $use
    }
 }
 
-// Ajout du suivi
+// Add followup
 $fup = new ITILFollowup();
 if($_POST['transfer_justification'] != '') {   
    $fup->add(array(
@@ -233,7 +243,7 @@ if($_POST['transfer_justification'] != '') {
    ));
 }
 
-// restore notificaiton setting
+// restore notification setting
 $CFG_GLPI["use_mailing"] = $save_mail;
 
 //Log transfer
