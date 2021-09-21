@@ -138,13 +138,6 @@ $ticket_group = new Group_Ticket();
 
 // Requalification
 if($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUALIFICATION) {
-   $ticket->update(array(
-      'id' => $ticket_id,
-      'entities_id' => $_POST['entities_id'],
-      'type' => $_POST['type'],
-      'itilcategories_id' => $_POST['itilcategories_id']
-   ));
-   
    // if auto-escalation, set group to assign
    if($_POST['transfermode'] == PluginTickettransferTickettab::TRANSFER_MODE_AUTO) {
       $_POST['groups_id_assign'] = $itilCategory->fields['groups_id'];
@@ -206,6 +199,16 @@ if(isset($_POST['groups_id_assign'])) {
             'id' => $tu['id']
       ));
    }
+}
+
+// Requalification
+if($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUALIFICATION) {
+   $ticket->update(array(
+      'id' => $ticket_id,
+      'entities_id' => $_POST['entities_id'],
+      'type' => $_POST['type'],
+      'itilcategories_id' => $_POST['itilcategories_id']
+   ));
 }
 
 // Manage 'stay opserver' option
