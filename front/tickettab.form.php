@@ -184,7 +184,7 @@ if(isset($_POST['groups_id_assign'])) {
          }
       }
    }
-} else {
+} else if($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUALIFICATION) {
    // Remove all existing groups
    foreach ( $ticket->getGroups(CommonITILActor::ASSIGN) as $group_ticket ) {
       $ticket_group->delete(array(
