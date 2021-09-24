@@ -85,7 +85,7 @@ msgstr ""
 
 #: inc/config.class.php:66
 msgid "Allowed entities"
-msgstr "Entités vers lesquelles le transfert est aurtorisé"
+msgstr "Entités vers lesquelles le transfert est autorisé"
 
 #: inc/config.class.php:77
 msgid "Force transfer justification"
