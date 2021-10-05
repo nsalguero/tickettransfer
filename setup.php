@@ -8,9 +8,9 @@ function plugin_version_tickettransfer() {
    return array(
       'name' => "Ticket transfer",
       'version' => '1.2.0',
-      'author' => 'Etiennef',
+      'author' => 'Etiennef, Nicolas Salguero',
       'license' => 'GPLv2+',
-      'homepage' => 'https://github.com/Etiennef/tickettransfer',
+      'homepage' => 'https://github.com/nsalguero/tickettransfer',
       'minGlpiVersion' => '9.5'
    );
 }
