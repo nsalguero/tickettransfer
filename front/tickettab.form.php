@@ -206,9 +206,15 @@ if($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUAL
    $ticket->update(array(
       'id' => $ticket_id,
       'entities_id' => $_POST['entities_id'],
-      'type' => $_POST['type'],
-      'itilcategories_id' => $_POST['itilcategories_id']
+      'type' => $_POST['type']
    ));
+   $ticket = new Ticket();
+   if ($ticket->getFromDB($ticket_id)) {
+      $ticket->update(array(
+         'id' => $ticket_id,
+         'itilcategories_id' => $_POST['itilcategories_id']
+      ));
+   }
 }
 
 // Manage 'stay opserver' option
