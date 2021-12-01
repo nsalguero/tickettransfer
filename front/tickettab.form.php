@@ -129,8 +129,8 @@ if (empty($_POST['transfer_justification']) && $config['force_justification']) {
  * Real transfer
  * ************** */
 // save notification setting then disable it
-$save_mail = $CFG_GLPI["use_mailing"];
-$CFG_GLPI["use_mailing"] = false;
+$save_mail = $CFG_GLPI["use_notifications"];
+$CFG_GLPI["use_notifications"] = false;
 
 $ticket_id = $_POST['id'];
 $ticket_user = new Ticket_User();
@@ -250,7 +250,7 @@ if($_POST['transfer_justification'] != '') {
 }
 
 // restore notification setting
-$CFG_GLPI["use_mailing"] = $save_mail;
+$CFG_GLPI["use_notifications"] = $save_mail;
 
 //Log transfer
 Event::log($ticket_id, "ticket", 4, "tracking",
