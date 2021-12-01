@@ -141,7 +141,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
             'name' => 'groups_id_assign',
             'entity' => $form_values['current_entities_id'],
             'display_emptychoice' => false,
-            'value' => $form_values['groups_id_assign'],
+            'value' => isset($form_values['groups_id_assign']) ? $form_values['groups_id_assign'] : NULL,
             'condition' => ['is_assign'],
             'rand' => '_tickettransfer',
             'display' => false
