@@ -207,7 +207,19 @@ class PluginTickettransferTickettab extends CommonDBTM {
                </td>
                <td>
                   $translations[transfer_justification]</br>
-                  <textarea name="transfer_justification" cols="60" rows="6">$form_values[transfer_justification]</textarea>
+HTML;
+      $rand = mt_rand();
+
+      Html::textarea([
+         'name'            => 'transfer_justification',
+         'editor_id'       => "transfer_justification$rand",
+         'required'        => $config['force_justification'],
+         'cols'            => 60,
+         'rows'            => 6,
+         'enable_richtext' => true,
+         'value'           => $form_values['transfer_justification'],
+      ]);
+      echo <<<HTML
                </td>
             </tr>
             <tr class="tab_bg_1">
