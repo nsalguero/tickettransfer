@@ -39,7 +39,9 @@ class PluginTickettransferTickettab extends CommonDBTM {
 
    static function displayTabContentForItem(CommonGLPI $item, $tabnum = 1, $withtemplate = 0) {
       if($item->getType() == 'Ticket') {
-         self::showForm($item);
+         $ticket = new self();
+         $ID = $item->getField('id');
+         $ticket->showForm($ID);
       }
       return true;
    }
@@ -102,8 +104,12 @@ class PluginTickettransferTickettab extends CommonDBTM {
     * Show tickettransfer tab
     * @param Ticket $ticket ticket for which we print the tab
     */
-   static function showForm(Ticket $ticket) {
+   function showForm($ID, $options=[]) {
       global $CFG_GLPI;
+
+      $ticket = new Ticket();
+      $ticket->getFromDB($ID);
+
       $form_values = self::getFormValues($ticket);
 
       $action_url = self::getFormURL();
