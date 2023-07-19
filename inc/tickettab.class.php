@@ -222,7 +222,9 @@ HTML;
          'required'        => $config['force_justification'],
          'cols'            => 60,
          'rows'            => 6,
+         'enable_fileupload' => false,
          'enable_richtext' => true,
+         'enable_images'     => false,
          'value'           => $form_values['transfer_justification'],
       ]);
       echo <<<HTML
