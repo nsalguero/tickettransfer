@@ -118,13 +118,7 @@ class PluginTickettransferTickettab extends CommonDBTM {
       $transfertype_dd = self::makeTranfertypeDropdown($form_values);
 
       $entitiesId = 'dropdown_entities_id_tickettransfer';
-      $entities_dd = Entity::dropdown(array(
-            'entity' => $form_values['allowed_entities'],
-            'value' => $form_values['entities_id'],
-            'name' => 'entities_id',
-            'rand' => '_tickettransfer',
-            'display' => false
-      ));
+      $entities_dd = self::makeEntitiesDropdown($form_values);
 
 
       $typeId = 'dropdown_type_tickettransfer';
@@ -322,6 +316,32 @@ JS;
    }
 
    /**
+    * Prepare HTML string for the entity dropdown.
+    * @param array $form_values default form values. Must contain allowed_entities
+    * @return string HTML output to echo
+    */
+   static function makeEntitiesDropdown($form_values) {
+      $ent = new Entity();
+      $data = $ent->find(['id' => $form_values['allowed_entities']], ['completename']);
+
+      $elems = array();
+      $opt_tooltips = array();
+      foreach ($data as $val) {
+         $elems[$val['id']] = $val['completename'];
+         $opt_tooltips[$val['id']] = $val['comment'];
+      }
+
+      $opt = array(
+            'value' => $form_values['entities_id'],
+            'rand' => '_tickettransfer',
+            'display' => false,
+            'option_tooltips' => $opt_tooltips
+      );
+
+      return Dropdown::showFromArray("entities_id", $elems, $opt);
+   }
+
+   /**
     * Prepare HTML string for the itilcategory dropdown.
     * @param array $input input values. Must contain
     *    - entities_id
@@ -330,25 +350,42 @@ JS;
     * @return string HTML output to echo
     */
    static function makeCategoriesDropdown($input) {
-      $opt = array(
-            'name' => 'itilcategories_id',
-            'entity' => $input['entities_id'],
-            'display_emptychoice' => false,
-            'rand' => '_tickettransfer',
-            'display' => false
-      );
+      $elems = array();
+      $opt_tooltips = array();
+
+      $ent = new Entity();
+      $categ = new ITILCategory();
 
       $condition = [($input['type'] == Ticket::INCIDENT_TYPE ? 'is_incident' : 'is_request') => 1];
       if($_SESSION["glpiactiveprofile"]["interface"] == "helpdesk") {
          $condition['is_helpdeskvisible'] = 1;
       }
-      $opt['condition'] = $condition;
+      $condition['entities_id'] = $input['entities_id'];
 
+      while ($condition['entities_id'] !== NULL) {
+         $data = $categ->find($condition);
+         foreach ($data as $val) {
+            $elems[$val['id']] = $val['completename'];
+            $opt_tooltips[$val['id']] = $val['comment'];
+         }
+         if ($ent->getFromDB($condition['entities_id'])) {
+            $condition['entities_id'] = $ent->getField('entities_id');
+         }
+      }
+
+      uasort($elems, 'strcmp');
+
+      $opt = array(
+            'display_emptychoice' => false,
+            'rand' => '_tickettransfer',
+            'display' => false,
+            'option_tooltips' => $opt_tooltips
+      );
       if(self::isCategoryValid($input)) {
          $opt['value'] = $input['itilcategories_id'];
       }
 
-      return ITILCategory::dropdown($opt);
+      return Dropdown::showFromArray("itilcategories_id", $elems, $opt);
    }
 
    /**
