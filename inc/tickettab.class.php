@@ -370,6 +370,7 @@ JS;
          }
          if ($ent->getFromDB($condition['entities_id'])) {
             $condition['entities_id'] = $ent->getField('entities_id');
+            $condition['is_recursive'] = 1;
          }
       }
 
