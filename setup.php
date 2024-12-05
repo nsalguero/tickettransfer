@@ -7,7 +7,7 @@
 function plugin_version_tickettransfer() {
    return array(
       'name' => "Ticket transfer",
-      'version' => '1.3.1',
+      'version' => '1.3.2',
       'author' => 'Etiennef, Nicolas Salguero',
       'license' => 'GPLv2+',
       'homepage' => 'https://github.com/nsalguero/tickettransfer',
@@ -73,9 +73,11 @@ function plugin_init_tickettransfer() {
       'addtabon' => array('Ticket')
    ));
 
+   $PLUGIN_HOOKS['add_javascript']['tickettransfer'] = array("scripts/strict_search.js");
+
    // Réécriture des liens escalade
    if((new Plugin())->isActivated('escalade')) {
-       $PLUGIN_HOOKS['add_javascript']['tickettransfer'] = 'scripts/escalade.js';
+       array_push($PLUGIN_HOOKS['add_javascript']['tickettransfer'], 'scripts/escalade.js');
    }
    // Notifications
    $PLUGIN_HOOKS['item_get_events']['tickettransfer'] = array(

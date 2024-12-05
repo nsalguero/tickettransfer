@@ -338,7 +338,7 @@ JS;
             'option_tooltips' => $opt_tooltips
       );
 
-      return Dropdown::showFromArray("entities_id", $elems, $opt);
+      return PluginTickettransferDropdown::showFromArray("entities_id", $elems, $opt);
    }
 
    /**
@@ -386,7 +386,7 @@ JS;
          $opt['value'] = $input['itilcategories_id'];
       }
 
-      return Dropdown::showFromArray("itilcategories_id", $elems, $opt);
+      return PluginTickettransferDropdown::showFromArray("itilcategories_id", $elems, $opt);
    }
 
    /**
