@@ -226,9 +226,11 @@ HTML;
             </tr>
             <tr class="tab_bg_1">
                <td class="center" colspan="2"><input type="hidden" name="id"
-                  value="{$ticket->getID()}"> <input type="submit"
-                  name="transfer_ticket" value="$translations[transfer]"
-                  class="submit"></td>
+                  value="{$ticket->getID()}"> <button class="btn btn-primary me-2"
+                  type="submit" name="transfer_ticket" value="$translations[transfer]">
+                  <i class="fa-fw fas fa-level-up-alt"></i>
+                  <span>$translations[transfer]</span>
+               </button></td>
             </tr>
          </table>
 HTML;

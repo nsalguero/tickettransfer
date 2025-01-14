@@ -7,7 +7,7 @@
 function plugin_version_tickettransfer() {
    return array(
       'name' => "Ticket transfer",
-      'version' => '1.3.2',
+      'version' => '1.3.3',
       'author' => 'Etiennef, Nicolas Salguero',
       'license' => 'GPLv2+',
       'homepage' => 'https://github.com/nsalguero/tickettransfer',
