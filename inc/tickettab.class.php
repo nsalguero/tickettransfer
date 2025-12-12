@@ -1,4 +1,16 @@
 <?php
+/**
+ * Compare categories as ASCII strings.
+ * @param string $categ1
+ * @param string $categ2
+ */
+function cmpCategories($categ1, $categ2) {
+   $t = Transliterator::create('NFD; [:Nonspacing Mark:] Remove; NFC');
+   $c1 = $t->transliterate($categ1);
+   $c2 = $t->transliterate($categ2);
+   return strcmp($c1, $c2);
+}
+
 class PluginTickettransferTickettab extends CommonDBTM {
    const TRANSFER_TYPE_REQUALIFICATION = 'requalification';
    const TRANSFER_TYPE_ESCALATION = 'escalation';
@@ -376,7 +388,7 @@ JS;
          }
       }
 
-      uasort($elems, 'strcmp');
+      uasort($elems, 'cmpCategories');
 
       $opt = array(
             'display_emptychoice' => false,
