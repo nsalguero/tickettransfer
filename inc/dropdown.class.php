@@ -19,7 +19,6 @@ class PluginTickettransferDropdown extends Dropdown
      **/
     public static function showFromArray($name, array $elements, $options = [])
     {
-        Html::requireJs('tickettransfer');
         $output = parent::showFromArray($name, $elements, $options);
         $output = str_replace("= fuzzy.match(", "= transfersearch.match(", $output);
         return $output;

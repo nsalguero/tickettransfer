@@ -136,6 +136,8 @@ $ticket_id = $_POST['id'];
 $ticket_user = new Ticket_User();
 $ticket_group = new Group_Ticket();
 
+$old_entity = $ticket->getField('entities_id');
+
 // Requalification
 if($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUALIFICATION) {
    $ticket->update(array(
@@ -237,16 +239,29 @@ if(!$_POST['observer_option'] && $ticket->isUser(CommonITILActor::OBSERVER, $use
    }
 }
 
-// Add followup
-$fup = new ITILFollowup();
-if($_POST['transfer_justification'] != '') {   
-   $fup->add(array(
-      'content' => $config['justification_prefix'] . ($config['justification_prefix']?' : \n':'') . $_POST['transfer_justification'],
-      'items_id' => $ticket_id,
-      'itemtype' => 'Ticket',
-      'requesttypes_id' => '1',
-      'is_private' => '0'
-   ));
+if ($_POST['entities_id'] == $old_entity) {
+  // Add task
+  $task = new TicketTask();
+  if($_POST['transfer_justification'] != '') {
+     $task->add(array(
+        'content' => $config['justification_prefix'] . ($config['justification_prefix']?' : \n':'') . $_POST['transfer_justification'],
+        'tickets_id' => $ticket_id,
+        'state' => Planning::INFO,
+        'is_private' => '1'
+     ));
+  }
+} else {
+  // Add followup
+  $fup = new ITILFollowup();
+  if($_POST['transfer_justification'] != '') {
+     $fup->add(array(
+        'content' => $config['justification_prefix'] . ($config['justification_prefix']?' : \n':'') . $_POST['transfer_justification'],
+        'items_id' => $ticket_id,
+        'itemtype' => 'Ticket',
+        'requesttypes_id' => '1',
+        'is_private' => '0'
+     ));
+  }
 }
 
 // restore notification setting
@@ -272,8 +287,9 @@ $ticket->__tickettransfer = array(
 
 if ($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_REQUALIFICATION /*requalification*/
        && ($config['notif_requalification'] === 'always' || /*always notify*/
-             $config['notif_requalification'] === 'ongroupchange' && !$groupAlreadyAssign/*or only when group changed*/
-             )) {
+             $config['notif_requalification'] === 'ongroupchange' && !$groupAlreadyAssign/*or only when group changed*/)
+       && ($_POST['entities_id'] != $old_entity)
+             ) {
    NotificationEvent::raiseEvent('plugin_tickettransfer_requalification', $ticket);
 } else if ($_POST['transfertype'] == PluginTickettransferTickettab::TRANSFER_TYPE_ESCALATION /*escalation*/
       && ($config['notif_escalation'] === 'always' ||  /*always notify*/
