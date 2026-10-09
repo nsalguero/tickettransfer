@@ -7,7 +7,7 @@
 function plugin_version_tickettransfer() {
    return array(
       'name' => "Ticket transfer",
-      'version' => '1.3.5',
+      'version' => '1.3.6',
       'author' => 'Etiennef, Nicolas Salguero',
       'license' => 'GPLv2+',
       'homepage' => 'https://github.com/nsalguero/tickettransfer',
@@ -20,8 +20,8 @@ function plugin_version_tickettransfer() {
  * @return boolean le plugin peut s'exécuter sur ce GLPI
  */
 function plugin_tickettransfer_check_prerequisites() {
-   if(version_compare(GLPI_VERSION,'10.0','lt') || version_compare(GLPI_VERSION,'10.1','ge')) {
-      echo __("Plugin has been tested only for GLPI 10", 'tickettransfer');
+   if(version_compare(GLPI_VERSION,'10.0','lt') || version_compare(GLPI_VERSION,'12','ge')) {
+      echo __("Plugin has been tested only for GLPI 10 and 11", 'tickettransfer');
       return false;
    }
 
