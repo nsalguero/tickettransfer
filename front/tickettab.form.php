@@ -244,7 +244,7 @@ if ($_POST['entities_id'] == $old_entity) {
   $task = new TicketTask();
   if($_POST['transfer_justification'] != '') {
      $task->add(array(
-        'content' => $config['justification_prefix'] . ($config['justification_prefix']?' : \n':'') . $_POST['transfer_justification'],
+        'content' => $config['justification_prefix'] . ($config['justification_prefix']?' :':'') . $_POST['transfer_justification'],
         'tickets_id' => $ticket_id,
         'state' => Planning::INFO,
         'is_private' => '1'
@@ -255,7 +255,7 @@ if ($_POST['entities_id'] == $old_entity) {
   $fup = new ITILFollowup();
   if($_POST['transfer_justification'] != '') {
      $fup->add(array(
-        'content' => $config['justification_prefix'] . ($config['justification_prefix']?' : \n':'') . $_POST['transfer_justification'],
+        'content' => $config['justification_prefix'] . ($config['justification_prefix']?' :':'') . $_POST['transfer_justification'],
         'items_id' => $ticket_id,
         'itemtype' => 'Ticket',
         'requesttypes_id' => '1',
