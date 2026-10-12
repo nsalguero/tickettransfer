@@ -230,7 +230,7 @@ HTML;
          'rows'            => 6,
          'enable_fileupload' => false,
          'enable_richtext' => true,
-         'enable_images'     => true,
+         'enable_images'     => false,
          'value'           => $form_values['transfer_justification'],
       ]);
       echo <<<HTML
