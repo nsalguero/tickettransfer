@@ -10,7 +10,7 @@ root.transfersearch = transfersearch;
 // in `opts.pre` and `opts.post`. If no match, return null
 transfersearch.match = function(pattern, str, opts) {
   var compareString = transfersearch.normalize(str);
-  pattern = transfersearch.normalize(pattern).replace("&", "&amp;").replace(">", "&gt;").replace("<", "&lt;");
+  pattern = transfersearch.normalize(pattern);
   if (pattern === '') {
     return {rendered: str, score: 0};
   } else if (compareString.includes(pattern)) {
@@ -25,3 +25,11 @@ transfersearch.normalize = function(str) {
 };
 
 }());
+
+var setupAdaptPluginTickettransferDropdown = new Function (
+    "e",
+    setupAdaptDropdown.toString()
+        .replace("fuzzy.match(", "transfersearch.match(")
+        .replace(/^function[^{]+{/i,"")  // remove everything up to and including the first curly bracket
+        .replace(/}[^}]*$/i, "")  // remove last curly bracket and everything after<br>
+);

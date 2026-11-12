@@ -20,7 +20,7 @@ class PluginTickettransferDropdown extends Dropdown
     public static function showFromArray($name, array $elements, $options = [])
     {
         $output = parent::showFromArray($name, $elements, $options);
-        $output = str_replace("= fuzzy.match(", "= transfersearch.match(", $output);
+        $output = str_replace("setupAdaptDropdown(", "setupAdaptPluginTickettransferDropdown(", $output);
         return $output;
     }
 }
