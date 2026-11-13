@@ -135,4 +135,24 @@ class PluginTickettransferConfig extends PluginConfigmanagerConfig {
 
       return $config;
    }
+
+    public static function getTypeName($nb = 0)
+    {
+        return __s('Ticket transfer', 'tickettransfer');
+    }
+
+    public static function getIcon()
+    {
+        return "ti ti-transfer-vertical";
+    }
+
+   /**
+    * Determine the title of the config tab.
+    * Defaults to the plugion name, but can be overridden by the user.
+    * @param string $type configuration type
+    * @return String title of the tab
+    */
+   protected static function getTabNameForConfigType($type) {
+         return self::createTabEntry(self::getTypeName(), 0, $type, self::getIcon());
+   }
 }
